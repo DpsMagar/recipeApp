@@ -1,43 +1,30 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Recipe
-from .serializers import RecipeSerializer
+from rest_framework import generics
+from .models import Category, Recipe, Ingredient
+from .serializers import CategorySerializer, RecipeSerializer, IngredientSerializer
 
-# List all recipes or create a new recipe
-@api_view(['GET', 'POST'])
-def recipe_list(request):
-    if request.method == 'GET':
-        recipes = Recipe.objects.all()
-        serializer = RecipeSerializer(recipes, many=True)
-        return Response(serializer.data)
+# CRUD views for Category
+class CategoryListCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-    elif request.method == 'POST':
-        serializer = RecipeSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-# Retrieve, update, or delete a specific recipe
-@api_view(['GET', 'PUT', 'DELETE'])
-def recipe_detail(request, pk):
-    try:
-        recipe = Recipe.objects.get(pk=pk)
-    except Recipe.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+# CRUD views for Recipe
+class RecipeListCreateView(generics.ListCreateAPIView):  # Corrected to ListCreateAPIView
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
 
-    if request.method == 'GET':
-        serializer = RecipeSerializer(recipe)
-        return Response(serializer.data)
+class RecipeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
 
-    elif request.method == 'PUT':
-        serializer = RecipeSerializer(recipe, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# CRUD views for Ingredient
+class IngredientListCreateView(generics.ListCreateAPIView):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
 
-    elif request.method == 'DELETE':
-        recipe.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class IngredientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):  # Corrected class name
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
