@@ -12,7 +12,7 @@ class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
 
 # CRUD views for Recipe
-class RecipeListCreateView(generics.ListCreateAPIView):  # Corrected to ListCreateAPIView
+class RecipeListCreateView(generics.ListCreateAPIView):  
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
@@ -25,6 +25,6 @@ class IngredientListCreateView(generics.ListCreateAPIView):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
-class IngredientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):  # Corrected class name
+class IngredientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):  
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
