@@ -4,13 +4,14 @@ from .views import (
     userRegisterView,LoginView,
     CategoryListCreateView, CategoryRetrieveUpdateDestroyView,
     RecipeListCreateView, RecipeRetrieveUpdateDestroyView,
-    IngredientListCreateView, IngredientRetrieveUpdateDestroyView
+    IngredientListCreateView, IngredientRetrieveUpdateDestroyView,LogoutView
 )
 
 urlpatterns = [
     
     path('login/', LoginView.as_view(), name='login'),
     path('register/', userRegisterView.as_view(), name='register'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     
     # URLs for Category
     path('categories/', CategoryListCreateView.as_view(), name='category-list-create'),
