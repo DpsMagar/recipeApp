@@ -4,7 +4,8 @@ import logo from '../Images/logo.png';
 
 const Navbar = () => {
   return (
-<nav className="shadow-md py-3" style={{ backgroundColor: 'rgb(84, 89, 92)' }}>
+    <nav className="text-white bg-gray-800 shadow-md py-3" >
+{/* <nav className="shadow-md py-3" style={{ backgroundColor: 'rgb(84, 89, 92)' }}> */}
       <div className="container mx-auto px-5 flex justify-between items-center">
         <div className="text-2xl font-bold">
           <Link to="/" className=" hover:text-blue-600 transition duration-300">

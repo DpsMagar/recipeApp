@@ -27,8 +27,7 @@ const Login = () => {
             localStorage.setItem('access_token', access);
             localStorage.setItem('refresh_token', refresh);
 
-            // Redirect to dashboard or home page
-            navigate('/logout');  // Adjust this to your desired route
+            navigate('/homepage');
         } catch (err) {
             if (err.response) {
                 console.error('Error response:', err.response);
