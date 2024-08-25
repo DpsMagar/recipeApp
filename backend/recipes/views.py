@@ -10,7 +10,8 @@ from .serializers import (
 )
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken 
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 # User registration view
 class userRegisterView(generics.CreateAPIView):
@@ -19,22 +20,8 @@ class userRegisterView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
 
 # User login view
-class LoginView(APIView):
+class LoginView(TokenObtainPairView):
     permission_classes = [AllowAny]
-
-    def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        
-        if not username or not password:
-            return Response({'detail': 'Username and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        user = authenticate(username=username, password=password)
-        if user:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key})
-        else:
-            return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 # User logout view
 class LogoutView(APIView):
@@ -53,26 +40,34 @@ class LogoutView(APIView):
 class CategoryListCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
 
 class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
 
 # CRUD views for Recipe
 class RecipeListCreateView(generics.ListCreateAPIView):  
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
 class RecipeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+    permission_classes = [IsAuthenticated]  
 
 # CRUD views for Ingredient
 class IngredientListCreateView(generics.ListCreateAPIView):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+    permission_classes = [IsAuthenticated]  
 
 class IngredientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):  
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+    permission_classes = [IsAuthenticated]  
+    
+
+

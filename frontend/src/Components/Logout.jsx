@@ -12,7 +12,7 @@ const Logout = () => {
 
             // If no refresh token, remove tokens and redirect
             if (!refreshToken) {
-                localStorage.removeItem('token');
+                localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 navigate('/login');
                 return;
@@ -22,7 +22,7 @@ const Logout = () => {
             await axiosInstance.post('logout/', { refresh_token: refreshToken });
 
             // Remove tokens from local storage
-            localStorage.removeItem('token');
+            localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
 
             // Redirect to the login page
@@ -30,7 +30,7 @@ const Logout = () => {
         } catch (err) {
             console.error('Logout failed:', err);
             // Remove tokens anyway and redirect
-            localStorage.removeItem('token');
+            localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             navigate('/login');
         }

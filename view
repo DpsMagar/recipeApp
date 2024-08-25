@@ -15,3 +15,24 @@ class IngredientListCreateView(generics.ListCreateAPIView):
 class IngredientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
+
+
+     #For tokens
+    
+     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+
+     def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        if not username or not password:
+            return Response({'detail': 'Username and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(username=username, password=password)
+        if user:
+            token, created = Token.objects.get_or_create(user=user)
+            return Response({'token': token.key})
+        else:
+            return Response({'detail': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)

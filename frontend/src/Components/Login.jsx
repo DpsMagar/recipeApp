@@ -22,11 +22,10 @@ const Login = () => {
                 password,
             });
 
-            // Store token in localStorage
-            console.log(response.data);
-            console.log(response.data.token);
-            
-            localStorage.setItem('token', response.data.token);
+            // Store access and refresh tokens in localStorage
+            const { access, refresh } = response.data;
+            localStorage.setItem('access_token', access);
+            localStorage.setItem('refresh_token', refresh);
 
             // Redirect to dashboard or home page
             navigate('/logout');  // Adjust this to your desired route
