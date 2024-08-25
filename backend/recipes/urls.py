@@ -23,7 +23,7 @@ urlpatterns = [
     
     #URLs for Ingredient
     path('ingredients/', IngredientListCreateView.as_view(), name='ingredient-list-create'),
-    path('ingredients/<int:pk>',IngredientRetrieveUpdateDestroyView.as_view(), name='recipe-detail')
+    path('ingredients/<int:pk>',IngredientRetrieveUpdateDestroyView.as_view(), name='recipe-detail'),
 
 ]
 

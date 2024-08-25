@@ -23,10 +23,13 @@ const Login = () => {
             });
 
             // Store token in localStorage
+            console.log(response.data);
+            console.log(response.data.token);
+            
             localStorage.setItem('token', response.data.token);
 
             // Redirect to dashboard or home page
-            navigate('/register');  // Adjust this to your desired route
+            navigate('/logout');  // Adjust this to your desired route
         } catch (err) {
             if (err.response) {
                 console.error('Error response:', err.response);

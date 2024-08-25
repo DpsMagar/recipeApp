@@ -60,6 +60,7 @@ class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 # CRUD views for Recipe
 class RecipeListCreateView(generics.ListCreateAPIView):  
+    permission_classes = [AllowAny]
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
