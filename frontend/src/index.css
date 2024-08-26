@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.homeLogo{
+    height: 40px;
+    border-radius: 25px;
+}
+.mainLogo{
+    margin-top: 500px;
+    margin-left: 1300px;
+}
