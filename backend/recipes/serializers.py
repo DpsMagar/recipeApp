@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Recipe, Ingredient
+from .models import Category, Dish, Ingredient
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
@@ -8,10 +8,10 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'name']
 
-class RecipeSerializer(serializers.ModelSerializer):
+class DishSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Recipe
-        fields = ['id', 'title', 'description', 'instructions', 'user', 'category', 'created_at', 'updated_at']
+        model = Dish
+        fields = [ 'title', 'description','estimatedTime', 'instructions', 'user', 'category', 'created_at', 'updated_at']
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:

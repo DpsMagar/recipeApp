@@ -3,12 +3,11 @@ from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
-from .models import Category, Recipe, Ingredient
+from .models import Category, Dish, Ingredient
 from .serializers import (
-    CategorySerializer, RecipeSerializer, IngredientSerializer,
+    CategorySerializer, DishSerializer, IngredientSerializer,
     RegisterSerializer, LoginSerializer
 )
-from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken 
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -48,14 +47,14 @@ class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 # CRUD views for Recipe
-class RecipeListCreateView(generics.ListCreateAPIView):  
+class DishListCreateView(generics.ListCreateAPIView):  
     permission_classes = [IsAuthenticated]
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
+    queryset = Dish.objects.all()
+    serializer_class = DishSerializer
 
-class RecipeRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
+class DishRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Dish.objects.all()
+    serializer_class = DishSerializer
     permission_classes = [IsAuthenticated]  
 
 # CRUD views for Ingredient

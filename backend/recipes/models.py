@@ -3,17 +3,26 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
 
-class Recipe(models.Model):
-    title = models.CharField(max_length=200)
+class Dish(models.Model):
+    title = models.CharField(max_length=200, primary_key=True)
     description = models.TextField()
     instructions = models.TextField()
+    estimatedTime= models.DurationField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.title
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=100)
     quantity = models.CharField(max_length=50)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE, to_field='title')
+    def __str__(self):
+        return self.name
+    
+    

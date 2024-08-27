@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Category, Recipe, Ingredient
+from .models import Category, Dish, Ingredient
 
-# Recipe model registration
-class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'instructions', 'user', 'category', 'created_at', 'updated_at',)
+# Dish model registration
+class DishAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'instructions','estimatedTime', 'user', 'category', 'created_at', 'updated_at',)
     search_fields = ('title',)
 
 # Category model registration
@@ -13,10 +13,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 # Ingredient model registration
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'quantity', 'recipe')
+    list_display = ('name', 'quantity', 'dish')
     search_fields = ('name',)
 
 # Registering the models with their respective ModelAdmin classes
-admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(Dish, DishAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Ingredient, IngredientAdmin)

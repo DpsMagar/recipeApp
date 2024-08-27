@@ -3,7 +3,7 @@ from .views import (
     
     userRegisterView,LoginView,
     CategoryListCreateView, CategoryRetrieveUpdateDestroyView,
-    RecipeListCreateView, RecipeRetrieveUpdateDestroyView,
+    DishListCreateView, DishRetrieveUpdateDestroyView,
     IngredientListCreateView, IngredientRetrieveUpdateDestroyView,LogoutView
 )
 
@@ -18,8 +18,8 @@ urlpatterns = [
     path('categories/<int:pk>/', CategoryRetrieveUpdateDestroyView.as_view(), name='category-detail'),
 
     #URLs for Recipe
-    path('recipes/', RecipeListCreateView.as_view(), name='recipe-list-create'),
-    path('recipes/<int:pk>',RecipeRetrieveUpdateDestroyView.as_view(), name='recipe-detail'),
+    path('dishes/', DishListCreateView.as_view(), name='dish-list-create'),
+    path('dishes/<int:pk>',DishRetrieveUpdateDestroyView.as_view(), name='dish-detail'),
     
     #URLs for Ingredient
     path('ingredients/', IngredientListCreateView.as_view(), name='ingredient-list-create'),
