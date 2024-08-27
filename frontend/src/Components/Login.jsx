@@ -27,7 +27,7 @@ const Login = () => {
             localStorage.setItem('access_token', access);
             localStorage.setItem('refresh_token', refresh);
 
-            navigate('/homepage');
+            navigate('/home');
         } catch (err) {
             if (err.response) {
                 console.error('Error response:', err.response);
