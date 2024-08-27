@@ -24,53 +24,20 @@ function MainPage() {
   
   return (    
     <div className='w-full h-full bg-red-900'> 
-    <div className='flex justify-evenly'>
-      <div className='border-red-200 size-60  bg-slate-500 m-2  overflow-hidden flex flex-col  rounded-md'>
+      <div  className='flex justify-evenly'>
+        {recipes.map((recipe)=>(
+          <div key={recipe.title} className='border-red-200 size-60  bg-slate-500 m-2  overflow-hidden flex flex-col  rounded-md'>
             <div className='bg-slate-400 size-36 w-52 rounded-md my-2 mx-4'><img className='w-full h-full rounded-md' src={friedRice} alt="image Here"/></div>
-            <div className='mx-2 text-xl font-bold text-gray-800'>Nepali Fried Rice </div>
-<div className='flex justify-between mx-2 mt-5'>
-  <div className='text-sm text-gray-800'>20-30 mins</div>
-  <div className='-mt-1'>
-    <BookmarkIcon/>
-  </div>
-</div>
-
+              <div className='mx-2 text-xl font-bold text-gray-800'>{recipe.title}</div>
+                <div className='flex justify-between mx-2 mt-5'>
+                    <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
+                        <div className='-mt-1'>
+                            <BookmarkIcon/>
+                        </div>
+                </div>
+          </div>
+        ))}
       </div>
-      {/* <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-      </div>
-      <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-      </div>
-      <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-      </div>
-      <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-      </div>
-      <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-      </div> */}
-
-    </div>
-    {/* <div className='flex justify-evenly'>
-      <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-        </div>
-    </div>
-    <div className='flex justify-evenly'>
-      <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-        </div>
-    </div>
-    <div className='flex justify-evenly'>
-      <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-        </div>
-        <div className='border-red-200 size-60  bg-slate-500 m-2 rounded-sm overflow-hidden'>
-            <div className='bg-slate-400 w-full mx-3'></div>
-        </div>
-    </div> */}
     </div>
   );
 }

@@ -10,7 +10,7 @@ class Dish(models.Model):
     title = models.CharField(max_length=200, primary_key=True)
     description = models.TextField()
     instructions = models.TextField()
-    estimatedTime= models.DurationField()
+    estimatedTime= models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
