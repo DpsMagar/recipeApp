@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import axiosInstance from './AxiosInstance';
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
 
     const handleLogout = async () => {
         try {
@@ -14,7 +14,8 @@ const Logout = () => {
             if (!refreshToken) {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
-                navigate('/login');
+                sessionStorage.removeItem('isLoggedIn');
+                navigate('/home');
                 return;
             }
 
@@ -24,6 +25,7 @@ const Logout = () => {
             // Remove tokens from local storage
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
+            sessionStorage.removeItem('isLoggedIn');
 
             // Redirect to the login page
             navigate('/login');
@@ -32,6 +34,8 @@ const Logout = () => {
             // Remove tokens anyway and redirect
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
+            sessionStorage.removeItem('isLoggedIn');
+
             navigate('/login');
         }
     };

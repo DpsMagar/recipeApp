@@ -1,12 +1,56 @@
- <div className='flex justify-evenly'>
-        <div className='border-red-200 size-60  bg-slate-500 m-2  overflow-hidden flex flex-col  rounded-md'>
-          <div className='bg-slate-400 size-36 w-52 rounded-md my-2 mx-4'><img className='w-full h-full rounded-md' src={friedRice} alt="image Here"/></div>
-            <div className='mx-2 text-xl font-bold text-gray-800'>Nepali Fried Rice </div>
-              <div className='flex justify-between mx-2 mt-5'>
-                  <div className='text-sm text-gray-800'>20-30 mins</div>
-                     <div className='-mt-1'>
-                          <BookmarkIcon/>
-                      </div>
-              </div>
+// LoginPage.js
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext'; // assuming you use context for auth state management
+
+function LoginPage() {
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            // Replace this with your login API call
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+            if (!response.ok) throw new Error('Login failed');
+            // Assuming login is successful
+            login();
+            navigate('/'); // Redirect to homepage or desired route
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    return (
+        <div>
+            <h1>Login</h1>
+            <form onSubmit={handleLogin}>
+                <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Username"
+                    required
+                />
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                />
+                <button type="submit">Login</button>
+            </form>
+            {error && <p>{error}</p>}
         </div>
-      </div>
+    );
+}
+
+export default LoginPage;

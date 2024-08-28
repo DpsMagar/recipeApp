@@ -26,6 +26,7 @@ const Login = () => {
             const { access, refresh } = response.data;
             localStorage.setItem('access_token', access);
             localStorage.setItem('refresh_token', refresh);
+            sessionStorage.setItem('isLoggedIn','true')
 
             navigate('/home');
         } catch (err) {
