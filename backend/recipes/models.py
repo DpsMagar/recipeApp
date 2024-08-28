@@ -11,6 +11,7 @@ class Dish(models.Model):
     description = models.TextField()
     instructions = models.TextField()
     estimatedTime= models.TextField()
+    image= models.ImageField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
