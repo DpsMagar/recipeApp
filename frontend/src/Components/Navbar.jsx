@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../Images/logo.png';
 
 const Navbar = () => {
+
+  const [isLoggedIn, setIsLoggendIn]= useState(false)
   return (
     <nav className="text-white bg-gray-800 shadow-md py-3" >
 {/* <nav className="shadow-md py-3" style={{ backgroundColor: 'rgb(84, 89, 92)' }}> */}
