@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; 
 import logo from '../Images/logo.png'; // Adjust the path to your logo image
+import { Outlet } from 'react-router-dom';
 
 const Layout = ({ children }) => {
   return (
