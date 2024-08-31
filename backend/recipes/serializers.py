@@ -21,8 +21,8 @@ class IngredientSerializer(serializers.ModelSerializer):
 #For registration
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ('username', 'password', 'email')
+        model = User    
+        fields = ('id','username', 'password', 'email')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -38,3 +38,12 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Invalid credentials")
+    
+
+#For the info of the user
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']  # Include 'id' and other fields as needed
+    
+    

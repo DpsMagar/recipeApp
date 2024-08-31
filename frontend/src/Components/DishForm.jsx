@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "./AxiosInstance";
 import { useNavigate } from "react-router-dom";
+
 const DishForm = () => {
-  const navigate= useNavigate();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axiosInstance.get("users/");
+        setUsers(response.data); // Update state with user data
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  const userName = localStorage.getItem("userName");
+  const userId = users.find((user) => user.username === userName);
+  console.log(userId);
+
+  const navigate = useNavigate();
   const schema = yup.object().shape({
     title: yup.string().required("Title is required").max(200, "Title must be at most 200 characters"),
     description: yup.string().required("Description is required"),
@@ -24,11 +45,9 @@ const DishForm = () => {
   });
 
   const onSubmit = async (data) => {
-
     console.log(data);
 
-    
-    const formData = new FormData(); 
+    const formData = new FormData();
 
     // Append all form fields to the FormData object
     formData.append("title", data.title);
@@ -38,22 +57,26 @@ const DishForm = () => {
     formData.append("image", data.image[0]); // Append the first file from the image input
     formData.append("category", data.category);
 
-    //For the username
-    const userName = localStorage.getItem("userName"); 
-    formData.append("user", 1);
+    // Check if userId is defined before appending it to formData
+    if (userId) {
+      formData.append("user", userId.id);
+    } else {
+      console.error("User ID not found");
+      return; // Exit early if userId is not found
+    }
 
-
-for (const [key, value] of formData.entries()) {
-    console.log(key, value);
-  }    
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
 
     try {
       // Send the POST request to the Django backend
-      const response = await axiosInstance.post("dishes/", formData,
-      );
+      const response = await axiosInstance.post("dishes/", formData);
       
       // Handle success, such as displaying a success message or redirecting
       console.log("Dish created successfully:", response.data);
+      // Optionally navigate to another page
+      // navigate('/some-route');
     } catch (error) {
       // Handle error, such as displaying an error message
       console.error("Error creating dish:", error);
@@ -155,7 +178,6 @@ for (const [key, value] of formData.entries()) {
       </button>
     </form>
   );
-
 };
 
 export default DishForm;
