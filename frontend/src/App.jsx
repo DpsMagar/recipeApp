@@ -7,7 +7,8 @@ import Logout from './Components/Logout';
 import HomePage from './Components/Home';
 import About from './Components/About';
 import MainPage from './Components/MainPage';
-import Form from './Components/Form';
+import DishForm from './Components/DishForm';
+import IngredientForm from './Components/IngredientForm';
 
 function App() {
     return (
@@ -19,7 +20,9 @@ function App() {
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/about" element={<Layout><About/></Layout>}/>
                 <Route path="/home" element={<Layout><MainPage/></Layout>}></Route>
-                <Route path="/home/create" element={<Layout><Form/></Layout>} />
+                <Route path="/home/create" element={<Layout><DishForm/></Layout>} />
+                <Route path="/ingredientForm" element={<Layout><IngredientForm/></Layout>} />
+
             </Routes>
         </Router>   
     );

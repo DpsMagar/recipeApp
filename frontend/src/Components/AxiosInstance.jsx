@@ -4,19 +4,24 @@ import axios from 'axios';
 const axiosInstance = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/', // Update with your Django backend URL
     timeout: 5000,
-    headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-    },
+    
 });
 
 // Request interceptor for adding the token to requests
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('access_token');  // Consistent naming
+        const token = localStorage.getItem('access_token');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
+
+        // Dynamically set Content-Type header if sending FormData
+        if (config.data instanceof FormData) {
+            // Axios will automatically set Content-Type to multipart/form-data for FormData
+            delete config.headers['Content-Type']; // Remove Content-Type so Axios can set it
+        }
+        config.headers.Accept = 'application/json';
+
         return config;
     },
     (error) => Promise.reject(error)

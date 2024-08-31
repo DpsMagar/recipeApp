@@ -6,6 +6,7 @@ from .views import (
     DishListCreateView, DishRetrieveUpdateDestroyView,
     IngredientListCreateView, IngredientRetrieveUpdateDestroyView,LogoutView
 )
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     
@@ -24,6 +25,10 @@ urlpatterns = [
     #URLs for Ingredient
     path('ingredients/', IngredientListCreateView.as_view(), name='ingredient-list-create'),
     path('ingredients/<int:pk>',IngredientRetrieveUpdateDestroyView.as_view(), name='ingredient-detail'),
+    
+     # Other URL patterns
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
 
 ]
