@@ -164,9 +164,11 @@ const DishForm = () => {
           className={`mt-1 block w-full px-3 py-2 border ${errors.category ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
         >
           {/* Placeholder and options */}
-          <option value="">Select a category</option>
-          <option value="1">Category 1</option>
-          <option value="2">Category 2</option>
+          <option value="" >Select a category</option>
+          <option value="1">Stir Frying</option>
+          <option value="2">Steaming</option>
+          <option value="3">Deep Frying</option>
+          <option value="4">Boiling and Shimmering</option>
           {/* Add options dynamically based on categories */}
         </select>
         {errors.category && <p className="mt-2 text-sm text-red-600">{errors.category.message}</p>}

@@ -12,6 +12,25 @@ function MainPage() {
   const [category4Items, setCategory4Items] = useState([]);
 
   const {bookmarks, toggleBookmark} = bookmarkStore();
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axiosInstance.get("users/");
+        setUsers(response.data); // Update state with user data
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+  const userName = localStorage.getItem("userName");
+  const userId = users.find((user) => user.username === userName);
+  console.log(userId);
   
   
   useEffect(() => {
