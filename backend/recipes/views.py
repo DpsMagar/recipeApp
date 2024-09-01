@@ -49,8 +49,15 @@ class CategoryRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 # CRUD views for Recipe
 class DishListCreateView(generics.ListCreateAPIView):  
     permission_classes = [IsAuthenticated]
-    queryset = Dish.objects.all()
     serializer_class = DishSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        # Fetch public recipes and user-specific recipes
+        public_recipes = Dish.objects.filter(public=True)
+        user_recipes = Dish.objects.filter(user=user)
+        combined_recipes = public_recipes | user_recipes
+        return combined_recipes
 
 class DishRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Dish.objects.all()
