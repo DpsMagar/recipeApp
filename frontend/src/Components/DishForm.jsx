@@ -3,17 +3,30 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "./AxiosInstance";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const DishForm = () => {
   const [users, setUsers] = useState([]);
+  const[category, setCategory]= useState()
+  const location = useLocation();
+  useEffect(() => {
+    
+    const cat  = location.state.category
+    if (cat) {
+      setCategory(cat);
+    }
+  }, [location.state]);
+  
+  
+  // console.log(category);
+  
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserData = async () => {                                                       
       try {
         const response = await axiosInstance.get("users/");
-        setUsers(response.data); // Update state with user data
-        console.log(response.data);
+        setUsers(response.data);        
+        
       } catch (error) {
         console.error("Error fetching user data:", error);
         }
@@ -24,7 +37,6 @@ const DishForm = () => {
 
   const userName = localStorage.getItem("userName");
   const userId = users.find((user) => user.username === userName);
-  console.log(userId);
 
   const navigate = useNavigate();
   const schema = yup.object().shape({
@@ -33,7 +45,7 @@ const DishForm = () => {
     instructions: yup.string().required("Instructions are required"),
     estimatedTime: yup.string().required("Estimated time is required"),
     image: yup.mixed().required("Image is required"),
-    category: yup.string().required("Category is required"),
+    // category: yup.string().required("Category is required"),
   });
 
   const {
@@ -45,7 +57,7 @@ const DishForm = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log(category);
 
     const formData = new FormData();
 
@@ -55,7 +67,7 @@ const DishForm = () => {
     formData.append("instructions", data.instructions);
     formData.append("estimatedTime", data.estimatedTime);
     formData.append("image", data.image[0]); // Append the first file from the image input
-    formData.append("category", data.category);
+    formData.append("category", category);
 
     // Check if userId is defined before appending it to formData
     if (userId) {
@@ -154,7 +166,7 @@ const DishForm = () => {
       </div>
 
       {/* Category */}
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label htmlFor="category" className="block text-sm font-medium text-gray-700">
           Category
         </label>
@@ -164,15 +176,15 @@ const DishForm = () => {
           className={`mt-1 block w-full px-3 py-2 border ${errors.category ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
         >
           {/* Placeholder and options */}
-          <option value="" >Select a category</option>
+          {/* <option value="" >Select a category</option>
           <option value="1">Stir Frying</option>
           <option value="2">Steaming</option>
           <option value="3">Deep Frying</option>
-          <option value="4">Boiling and Shimmering</option>
+          <option value="4">Boiling and Shimmering</option> */}
           {/* Add options dynamically based on categories */}
-        </select>
-        {errors.category && <p className="mt-2 text-sm text-red-600">{errors.category.message}</p>}
-      </div>
+        {/* </select> */}
+        {/* {errors.category && <p className="mt-2 text-sm text-red-600">{errors.category.message}</p>} */}
+      {/* // </div> */}
 
       {/* Submit Button */}
       <button type="submit" className="w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
