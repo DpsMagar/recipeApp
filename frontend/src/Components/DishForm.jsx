@@ -16,7 +16,7 @@ const DishForm = () => {
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
-      }
+        }
     };
 
     fetchUserData();

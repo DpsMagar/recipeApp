@@ -14,23 +14,29 @@ function MainPage() {
   const {bookmarks, toggleBookmark} = bookmarkStore();
 
   const [users, setUsers] = useState([]);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axiosInstance.get("users/");
         setUsers(response.data); // Update state with user data
-        console.log(response.data);
+        const userName = localStorage.getItem("userName");
+        const user = response.data.find((user) => user.username === userName);
+        if (user) {
+          setUserId(user.id);
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
-
+    
+  
     fetchUserData();
   }, []);
-  const userName = localStorage.getItem("userName");
-  const userId = users.find((user) => user.username === userName);
   console.log(userId);
+  
+  
   
   
   useEffect(() => {
@@ -39,10 +45,16 @@ function MainPage() {
         const response = await axiosInstance.get('/dishes/'); 
         const items= response.data
         console.log(items); 
-        const category1= items.filter(item=>item.category==1);
-        const category2= items.filter(item=>item.category==2);
-        const category3= items.filter(item=>item.category==3);
-        const category4= items.filter(item=>item.category==4);
+
+        // console.log(items[0].user); 
+        const filteredItem=items.filter(item=>item.user == userId)
+        console.log(filteredItem); 
+        
+        
+        const category1= filteredItem.filter(item=>item.category==1);
+        const category2= filteredItem.filter(item=>item.category==2);
+        const category3= filteredItem.filter(item=>item.category==3);
+        const category4= filteredItem.filter(item=>item.category==4);
 
         setCategory1Items(category1);
         setCategory2Items(category2);
@@ -55,7 +67,7 @@ function MainPage() {
       }
     };
     fetchRecipes();
-  }, []);
+  }, [userId]);
   
   return (    
     <div className='w-full h-full bg-gray-800 '> 
