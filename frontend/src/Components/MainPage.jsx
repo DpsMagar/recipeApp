@@ -159,10 +159,10 @@ function MainPage() {
     <div className='flex gap-8 text-white'>
     <h2 className='text-xl font-bold text-white mb-2'>Boiling and Shimmering</h2>
     <Link to="/home/create" state={{ category: 4 }}>
-            <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded hover:bg-blue-500">
-              Create 
-            </button>   
-          </Link> 
+        <button className="bg-blue-700 text-white font-bold py-2 px-4 rounded hover:bg-blue-500">
+          Create 
+        </button>   
+    </Link> 
     </div>    <div className='flex flex-wrap'>
       {category4Items.map((recipe) => (
         <div key={recipe.title} className=' bg-slate-500 m-2 overflow-hidden flex flex-col rounded-md transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-out'>
