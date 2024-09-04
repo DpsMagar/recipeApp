@@ -1,3 +1,4 @@
+import { set } from 'react-hook-form';
 import { create } from 'zustand';
 
 const bookmarkStore = create((set) => ({
@@ -17,4 +18,11 @@ const focusStore = create((set) => ({
   }))
 }));
 
-export { bookmarkStore, focusStore };
+const formActivationStore= create((set)=>({
+  isFormActive:true,
+  toggleFormActivation: ()=>set((state)=>({
+    isFormActive: !state.isFormActive
+  }))
+}))
+
+export { bookmarkStore, focusStore, formActivationStore };

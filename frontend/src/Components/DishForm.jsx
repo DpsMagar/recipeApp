@@ -6,13 +6,16 @@ import axiosInstance from "./AxiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import IngredientForm from "./IngredientForm";
 import { focusStore } from "../Zustand Store/Zstore";
+import { formActivationStore } from "../Zustand Store/Zstore";
 
 const DishForm = () => {
   const [users, setUsers] = useState([]);
   const [category, setCategory] = useState();
   const [title, setTitle] = useState();
   const location = useLocation();
-  const {focus, toggleFocus}= focusStore();
+  const { focus, toggleFocus } = focusStore();
+  const { isFormActive, toggleFormActivation } = formActivationStore();
+
   useEffect(() => {
     const cat = location.state?.category;
     if (cat) {
@@ -31,7 +34,7 @@ const DishForm = () => {
     };
 
     fetchUserData();
-    }, []);
+  }, []);
 
   const userName = localStorage.getItem("userName");
   const userId = users.find((user) => user.username === userName);
@@ -52,16 +55,14 @@ const DishForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset, // Destructure reset
   } = useForm({
     resolver: yupResolver(schema),
   });
-  // const handleFocus= ()=>{
-  //   setFocus(true)
-  // }
 
   const onSubmit = async (data) => {
     console.log(data.title);
-    
+
     setTitle((prevTitle) => data.title);
     const formData = new FormData();
     formData.append("title", data.title);
@@ -77,29 +78,28 @@ const DishForm = () => {
       console.error("User ID not found");
       return;
     }
-   
+
     try {
       const response = await axiosInstance.post("dishes/", formData);
       console.log("Dish created successfully:", response.data);
-      toggleFocus()
-
+      toggleFocus(); // Toggles the focus (perhaps to IngredientForm)
+      toggleFormActivation();
+      reset(); // Clear the form
     } catch (error) {
       console.error("Error creating dish:", error);
     }
   };
+
   useEffect(() => {
     console.log("Title updated:", title);
   }, [title]);
 
-
-  
-
   return (
     <div className="flex mx-auto py-8">
+      {/* DishForm */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        // o={()=>toggleFocus()}
-        className={`max-w-2xl mx-auto p-6 ${!focus ? 'bg-white' : 'bg-gray-100'} shadow-lg  rounded-lg mb-8`}
+        className={`max-w-2xl mx-auto p-6 ${!focus ? "bg-white" : "bg-gray-100"} shadow-lg rounded-lg mb-8 ${!isFormActive && "opacity-50 pointer-events-none"}`}
       >
         <h2 className="text-2xl font-bold mb-6">Add New Dish</h2>
 
@@ -112,75 +112,118 @@ const DishForm = () => {
             type="text"
             id="title"
             {...register("title")}
-            className={`mt-1 block w-full px-4 py-2 border ${errors.title ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`mt-1 block w-full px-4 py-2 border ${
+              errors.title ? "border-red-500" : "border-gray-300"
+            } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
           />
-          {errors.title && <p className="mt-2 text-sm text-red-600">{errors.title.message}</p>}
+          {errors.title && (
+            <p className="mt-2 text-sm text-red-600">{errors.title.message}</p>
+          )}
         </div>
 
         {/* Description */}
         <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
             Description
           </label>
           <textarea
             id="description"
             {...register("description")}
-            className={`mt-1 block w-full px-4 py-2 border ${errors.description ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`mt-1 block w-full px-4 py-2 border ${
+              errors.description ? "border-red-500" : "border-gray-300"
+            } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
           />
-          {errors.description && <p className="mt-2 text-sm text-red-600">{errors.description.message}</p>}
+          {errors.description && (
+            <p className="mt-2 text-sm text-red-600">
+              {errors.description.message}
+            </p>
+          )}
         </div>
 
         {/* Instructions */}
         <div className="mb-4">
-          <label htmlFor="instructions" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="instructions"
+            className="block text-sm font-medium text-gray-700"
+          >
             Instructions
           </label>
           <textarea
             id="instructions"
             {...register("instructions")}
-            className={`mt-1 block w-full px-4 py-2 border ${errors.instructions ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`mt-1 block w-full px-4 py-2 border ${
+              errors.instructions ? "border-red-500" : "border-gray-300"
+            } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
           />
-          {errors.instructions && <p className="mt-2 text-sm text-red-600">{errors.instructions.message}</p>}
+          {errors.instructions && (
+            <p className="mt-2 text-sm text-red-600">
+              {errors.instructions.message}
+            </p>
+          )}
         </div>
 
         {/* Estimated Time */}
         <div className="mb-4">
-          <label htmlFor="estimatedTime" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="estimatedTime"
+            className="block text-sm font-medium text-gray-700"
+          >
             Estimated Time
           </label>
           <input
             type="text"
             id="estimatedTime"
             {...register("estimatedTime")}
-            className={`mt-1 block w-full px-4 py-2 border ${errors.estimatedTime ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`mt-1 block w-full px-4 py-2 border ${
+              errors.estimatedTime ? "border-red-500" : "border-gray-300"
+            } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
           />
-          {errors.estimatedTime && <p className="mt-2 text-sm text-red-600">{errors.estimatedTime.message}</p>}
+          {errors.estimatedTime && (
+            <p className="mt-2 text-sm text-red-600">
+              {errors.estimatedTime.message}
+            </p>
+          )}
         </div>
 
         {/* Image */}
         <div className="mb-4">
-          <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="image"
+            className="block text-sm font-medium text-gray-700"
+          >
             Image
           </label>
           <input
             type="file"
             id="image"
             {...register("image")}
-            className={`mt-1 block w-full px-4 py-2 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`mt-1 block w-full px-4 py-2 border ${
+              errors.image ? "border-red-500" : "border-gray-300"
+            } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
           />
-          {errors.image && <p className="mt-2 text-sm text-red-600">{errors.image.message}</p>}
+          {errors.image && (
+            <p className="mt-2 text-sm text-red-600">{errors.image.message}</p>
+          )}
         </div>
 
         {/* Submit Button */}
         <button
-        // onClick={()=>toggleFocus()}
           type="submit"
           className="w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           Submit
         </button>
       </form>
-        <IngredientForm focus={focus} toggleFocus={toggleFocus} dish={title} />
+
+      {/* IngredientForm */}
+      <IngredientForm
+        focus={focus}
+        toggleFocus={toggleFocus}
+        dish={title}
+      />
     </div>
   );
 };
