@@ -58,6 +58,7 @@ const IngredientForm = (props) => {
     try {
       const response = await axiosInstance.post("ingredients/", updatedData);
       console.log("Ingredients created successfully:", response.data);
+      props.toggleFocus()
     } catch (error) {
       console.error("Error creating ingredients:", error);
     }
@@ -65,8 +66,8 @@ const IngredientForm = (props) => {
 
   return (
    
-    <div className={`max-w-4xl mx-auto p-4  shadow-md rounded-md h-[600px] overflow-hidden ${props.focus ? 'bg-white' : 'bg-gray-50'}`} >
-      <form onSubmit={handleSubmit(onSubmit)} className={`h-full flex flex-col  `} onMouseDown={()=> props.toggleFocus()}>
+    <div className={`max-w-4xl mx-auto p-4  shadow-md rounded-md h-[600px] overflow-hidden ${props.focus ? 'bg-white' : 'bg-gray-100'}`} >
+      <form onSubmit={handleSubmit(onSubmit)} className={`h-full flex flex-col  `}>
         <h2 className="text-xl font-semibold mb-4 text-gray-800">Add Ingredients</h2>
 
         <div className="flex-1 overflow-auto">
@@ -127,6 +128,7 @@ const IngredientForm = (props) => {
 
         {/* Submit Button */}
         <button
+        //  onClick={()=>props.toggleFocus()}
           type="submit"
           className="mt-4 w-full px-3 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
         >

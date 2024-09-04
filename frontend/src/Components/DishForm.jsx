@@ -81,6 +81,7 @@ const DishForm = () => {
     try {
       const response = await axiosInstance.post("dishes/", formData);
       console.log("Dish created successfully:", response.data);
+      toggleFocus()
 
     } catch (error) {
       console.error("Error creating dish:", error);
@@ -97,8 +98,8 @@ const DishForm = () => {
     <div className="flex mx-auto py-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        onMouseDown={()=>toggleFocus()}
-        className={`max-w-2xl mx-auto p-6 ${!focus ? 'bg-white' : 'bg-gray-50'} shadow-lg  rounded-lg mb-8`}
+        // o={()=>toggleFocus()}
+        className={`max-w-2xl mx-auto p-6 ${!focus ? 'bg-white' : 'bg-gray-100'} shadow-lg  rounded-lg mb-8`}
       >
         <h2 className="text-2xl font-bold mb-6">Add New Dish</h2>
 
@@ -172,6 +173,7 @@ const DishForm = () => {
 
         {/* Submit Button */}
         <button
+        // onClick={()=>toggleFocus()}
           type="submit"
           className="w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >

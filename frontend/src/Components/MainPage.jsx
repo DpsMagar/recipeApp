@@ -15,7 +15,7 @@ function MainPage() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserData = async () => { 
       try {
         const response = await axiosInstance.get("users/");
         const userName = localStorage.getItem("userName");

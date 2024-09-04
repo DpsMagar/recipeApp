@@ -11,7 +11,7 @@ const bookmarkStore = create((set) => ({
 }));
 
 const focusStore = create((set) => ({
-  focus: false,
+  focus: true,
   toggleFocus: () => set((state) => ({
     focus: !state.focus
   }))
