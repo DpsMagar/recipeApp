@@ -45,5 +45,21 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username']  # Include 'id' and other fields as needed
+        
+
+#Combined Serializer for three models
+class DishDetailSerializer(serializers.ModelSerializer):
+    ingredients = serializers.SerializerMethodField()
+    category = CategorySerializer(read_only=True)
+
+    class Meta:
+        model = Dish  # Specifies the model being serialized
+        fields = ['title', 'description', 'instructions', 'estimatedTime', 'image', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients']
+
+    def get_ingredients(self, obj):
+        # Fetches and serializes the related ingredients
+        ingredients = Ingredient.objects.filter(dish=obj.title)
+        return IngredientSerializer(ingredients, many=True).data
+
     
     
