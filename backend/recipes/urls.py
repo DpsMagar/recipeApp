@@ -20,6 +20,8 @@ urlpatterns = [
 
     #URLs for Recipe
     path('dishes/', DishListCreateView.as_view(), name='dish-list-create'),
+    #For retreiving all the datas
+    path('dishes/<str:title>/', DishRetrieveUpdateDestroyView.as_view(), name='dish-detail'),
     
     #URLs for Ingredient
     path('ingredients/', IngredientListCreateView.as_view(), name='ingredient-list-create'),
@@ -32,8 +34,7 @@ urlpatterns = [
     #for retreiving the data of the user
     path('users/', UserListView.as_view(), name='user-list'),
 
-    #For retreiving all the datas
-    path('dishes/<str:title>/', DishRetrieveUpdateDestroyView.as_view(), name='dish-detail')
+    
 ]
     
 

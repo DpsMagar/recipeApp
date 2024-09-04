@@ -9,6 +9,7 @@ import About from './Components/About';
 import MainPage from './Components/MainPage';
 import DishForm from './Components/DishForm';
 import IngredientForm from './Components/IngredientForm';
+import DishDetail from './Components/DishDetail';
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/home" element={<Layout><MainPage/></Layout>}></Route>
                 <Route path="/home/create" element={<Layout><DishForm/></Layout>} />
                 <Route path="/ingredientForm" element={<Layout><IngredientForm/></Layout>} />
+                <Route path="/detail" element={<Layout><DishDetail/></Layout>} />
 
             </Routes>
         </Router>

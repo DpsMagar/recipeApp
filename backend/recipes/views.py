@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from .models import Category, Dish, Ingredient
 from .serializers import (
     CategorySerializer, DishSerializer, IngredientSerializer,
-    RegisterSerializer, UserSerializer
+    RegisterSerializer, UserSerializer, DishDetailSerializer
 )
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken 
@@ -61,8 +61,9 @@ class DishListCreateView(generics.ListCreateAPIView):
 
 class DishRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Dish.objects.all()
-    serializer_class = DishSerializer
+    serializer_class = DishDetailSerializer
     permission_classes = [IsAuthenticated]  
+    lookup_field='title'
 
 # CRUD views for Ingredient
 class IngredientListCreateView(generics.ListCreateAPIView):
