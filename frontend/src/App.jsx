@@ -24,7 +24,7 @@ function App() {
                 <Route path="/ingredientForm" element={<Layout><IngredientForm/></Layout>} />
 
             </Routes>
-        </Router>   
+        </Router>
     );
 }
 

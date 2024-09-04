@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axiosInstance from './AxiosInstance';
 import bk1 from "../Images/b1.png";
 import bk2 from "../Images/b2.png";
-import bookmarkStore from '../Zustand Store/Zstore';
+import {bookmarkStore} from '../Zustand Store/Zstore';
 import { Link } from 'react-router-dom';
 
 function MainPage() {

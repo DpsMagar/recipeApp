@@ -1,13 +1,20 @@
-import {create} from 'zustand'
+import { create } from 'zustand';
 
-const bookmarkStore = create((set)=>({
-    bookmarks: {},
-    toggleBookmark: (title) => set((state) => ({
-      bookmarks: {
-        ...state.bookmarks,
-        [title]: !state.bookmarks[title]
-      }
-    }))
+const bookmarkStore = create((set) => ({
+  bookmarks: {},
+  toggleBookmark: (title) => set((state) => ({
+    bookmarks: {
+      ...state.bookmarks,
+      [title]: !state.bookmarks[title]
+    }
+  }))
 }));
 
-export default bookmarkStore;
+const focusStore = create((set) => ({
+  focus: false,
+  toggleFocus: () => set((state) => ({
+    focus: !state.focus
+  }))
+}));
+
+export { bookmarkStore, focusStore };

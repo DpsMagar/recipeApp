@@ -5,13 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "./AxiosInstance";
 
 const IngredientForm = (props) => {
-  // console.log(props);
-  
   const [dish, setDish]= useState()
   useEffect(()=>{
     const val= props.dish;
     setDish((prevData)=> val)
+
   },[props.dish])
+  
   const schema = yup.object().shape({
     ingredients: yup.array().of(
       yup.object().shape({
@@ -64,13 +64,14 @@ const IngredientForm = (props) => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 bg-white shadow-md rounded-md h-[600px] overflow-hidden">
-      <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
+   
+    <div className={`max-w-4xl mx-auto p-4  shadow-md rounded-md h-[600px] overflow-hidden ${props.focus ? 'bg-white' : 'bg-gray-50'}`} >
+      <form onSubmit={handleSubmit(onSubmit)} className={`h-full flex flex-col  `} onMouseDown={()=> props.toggleFocus()}>
         <h2 className="text-xl font-semibold mb-4 text-gray-800">Add Ingredients</h2>
 
         <div className="flex-1 overflow-auto">
           {fields.map((field, index) => (
-            <div key={field.id} className="flex items-center mb-3 p-2 border border-gray-300 rounded-md bg-gray-50">
+            <div key={field.id} className="flex items-center mb-3 p-2 border border-gray-300 rounded-md ">
               {/* Name Field */}
               <div className="flex-1 mr-3">
                 <label htmlFor={`ingredients[${index}].name`} className="text-xs font-medium text-gray-700">

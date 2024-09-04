@@ -5,13 +5,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "./AxiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import IngredientForm from "./IngredientForm";
+import { focusStore } from "../Zustand Store/Zstore";
 
 const DishForm = () => {
   const [users, setUsers] = useState([]);
   const [category, setCategory] = useState();
   const [title, setTitle] = useState();
   const location = useLocation();
-
+  const {focus, toggleFocus}= focusStore();
   useEffect(() => {
     const cat = location.state?.category;
     if (cat) {
@@ -54,6 +55,9 @@ const DishForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  // const handleFocus= ()=>{
+  //   setFocus(true)
+  // }
 
   const onSubmit = async (data) => {
     console.log(data.title);
@@ -74,11 +78,10 @@ const DishForm = () => {
       return;
     }
    
-    
-
     try {
       const response = await axiosInstance.post("dishes/", formData);
       console.log("Dish created successfully:", response.data);
+
     } catch (error) {
       console.error("Error creating dish:", error);
     }
@@ -86,13 +89,16 @@ const DishForm = () => {
   useEffect(() => {
     console.log("Title updated:", title);
   }, [title]);
+
+
   
 
   return (
     <div className="flex mx-auto py-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mb-8"
+        onMouseDown={()=>toggleFocus()}
+        className={`max-w-2xl mx-auto p-6 ${!focus ? 'bg-white' : 'bg-gray-50'} shadow-lg  rounded-lg mb-8`}
       >
         <h2 className="text-2xl font-bold mb-6">Add New Dish</h2>
 
@@ -172,7 +178,7 @@ const DishForm = () => {
           Submit
         </button>
       </form>
-        <IngredientForm dish={title} />
+        <IngredientForm focus={focus} toggleFocus={toggleFocus} dish={title} />
     </div>
   );
 };
