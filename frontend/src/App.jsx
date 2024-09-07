@@ -10,6 +10,7 @@ import MainPage from './Components/MainPage';
 import DishForm from './Components/DishForm';
 import IngredientForm from './Components/IngredientForm';
 import DishDetail from './Components/DishDetail';
+import StepsForms from './Components/StepsForms';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/home/create" element={<Layout><DishForm/></Layout>} />
                 <Route path="/ingredientForm" element={<Layout><IngredientForm/></Layout>} />
                 <Route path="/detail/:title" element={<Layout><DishDetail/></Layout>} />
+                <Route path="/steps" element={<Layout><StepsForms/></Layout>} />
 
             </Routes>
         </Router>
