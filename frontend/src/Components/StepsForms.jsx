@@ -3,6 +3,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axiosInstance from './AxiosInstance';
+import { useNavigate } from 'react-router-dom';
 const schema = yup.object().shape({
   steps: yup.array().of(
     yup.object().shape({
@@ -12,6 +13,7 @@ const schema = yup.object().shape({
 });
 
 const StepsForms = () => {
+    const navigate= useNavigate()
     const dish= localStorage.getItem('title')
   
   const { register, control, handleSubmit, formState: { errors }, reset } = useForm({
@@ -42,6 +44,7 @@ const StepsForms = () => {
       const response = await axiosInstance.post('steps/',updatedData);
       console.log('Steps submitted successfully:', response.data);
       reset();
+      navigate('/home')
     } catch (error) {
       console.error('Error submitting steps:', error);
     }

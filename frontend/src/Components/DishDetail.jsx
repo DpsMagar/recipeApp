@@ -6,6 +6,9 @@ const DishDetail = () => {
   const { title } = useParams(); // Get the dish title from URL parameters
   const [dish, setDish] = useState(null);
   const [error, setError] = useState(null);
+  const name= localStorage.getItem('userName')
+  const User = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
 
   useEffect(() => {
     const fetchDish = async () => {
@@ -62,7 +65,7 @@ const DishDetail = () => {
           )}
 
           <div className="text-sm text-gray-600 mb-4">
-            <div>Posted by: {dish.user.username}</div>
+            <div>Posted by: {User}</div>
             <div>Created at: {new Date(dish.created_at).toLocaleDateString()}</div>
             <div>Updated at: {new Date(dish.updated_at).toLocaleDateString()}</div>
             <div>Status: {dish.public ? "Public" : "Private"}</div>

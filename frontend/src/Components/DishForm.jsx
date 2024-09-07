@@ -54,7 +54,6 @@ const DishForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -85,7 +84,6 @@ const DishForm = () => {
       console.log("Dish created successfully:", response.data);
       toggleFocus();
       toggleFormActivation();
-      reset();
     } catch (error) {
       console.error("Error creating dish:", error);
     }
