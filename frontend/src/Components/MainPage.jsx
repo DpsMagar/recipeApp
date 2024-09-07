@@ -55,6 +55,11 @@ function MainPage() {
     fetchRecipes();
   }, [userId]);
 
+  const handleBookmark=(e, recipeTitle)=>{
+    toggleBookmark(recipeTitle);
+    e.preventDefault()    
+  }
+
   return (
     <div className='w-full h-full bg-gray-800'>
       {/* Category 1 */}
@@ -69,20 +74,22 @@ function MainPage() {
         </div>
         <div className='flex flex-wrap'>
           {category1Items.map((recipe) => (
-            <div key={recipe.title} className=' bg-slate-500 m-2 overflow-hidden flex flex-col rounded-md transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-out'>
-              <div className='bg-slate-400 size-36 w-52 rounded-md my-2 mx-4'>
-                <img className='w-full h-full rounded-md' src={recipe.image} alt={recipe.title} />
-              </div>
-              <div className='mx-2 text-xl font-bold text-gray-800'>
-                {recipe.title}
-              </div>
-              <div className='flex justify-between mx-2 mt-5'>
-                <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
-                <div className='pb-4'>
-                  <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={() => toggleBookmark(recipe.title)}/>
+            <Link to={`/detail/${recipe.title}`} key={recipe.title}>
+              <div key={recipe.title} className=' bg-slate-500 m-2 overflow-hidden flex flex-col rounded-md transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-out'>
+                <div className='bg-slate-400 size-36 w-52 rounded-md my-2 mx-4'>
+                  <img className='w-full h-full rounded-md' src={recipe.image} alt={recipe.title} />
+                </div>
+                <div className='mx-2 text-xl font-bold text-gray-800'>
+                  {recipe.title}
+                </div>
+                <div className='flex justify-between mx-2 mt-5'>
+                  <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
+                  <div className='pb-4'>
+                    <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -95,8 +102,11 @@ function MainPage() {
               Create 
             </button>   
           </Link>  
-    </div>    <div className='flex flex-wrap'>
+    </div>   
+     <div className='flex flex-wrap'>
       {category2Items.map((recipe) => (
+            <Link to={`/detail/${recipe.title}`} key={recipe.title}>
+
         <div key={recipe.title} className=' bg-slate-500 m-2 overflow-hidden flex flex-col rounded-md transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-out'>
               <div className='bg-slate-400 size-36 w-52 rounded-md my-2 mx-4'>
               <img 
@@ -112,10 +122,12 @@ function MainPage() {
             <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
             <div className='pb-4'>
               {/* <img src={bk1} alt="" className='size-6'/> */}
-              <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={()=>toggleBookmark(recipe.title)}/>
-            </div>
+              <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
+              </div>
           </div>
         </div>
+        </Link>
+
        ))}
     </div>
 </div>
@@ -129,8 +141,11 @@ function MainPage() {
               Create 
             </button>   
           </Link>  
-    </div>    <div className='flex flex-wrap'>
+    </div>  
+      <div className='flex flex-wrap'>
       {category3Items.map((recipe) => (
+            <Link to={`/detail/${recipe.title}`} key={recipe.title}>
+
         <div key={recipe.title} className=' bg-slate-500 m-2 overflow-hidden flex flex-col rounded-md transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-out'>
               <div className='bg-slate-400 size-36 w-52 rounded-md my-2 mx-4'>
               <img 
@@ -146,10 +161,12 @@ function MainPage() {
             <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
             <div className='pb-4'>
               {/* <img src={bk1} alt="" className='size-6'/> */}
-              <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={()=>toggleBookmark(recipe.title)}/>
-            </div>
+              <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
+              </div>
           </div>
         </div>
+        </Link>
+
        ))}
     </div>
 </div>
@@ -163,8 +180,11 @@ function MainPage() {
           Create 
         </button>   
     </Link> 
-    </div>    <div className='flex flex-wrap'>
+    </div>   
+     <div className='flex flex-wrap'>
       {category4Items.map((recipe) => (
+            <Link to={`/detail/${recipe.title}`} key={recipe.title}>
+
         <div key={recipe.title} className=' bg-slate-500 m-2 overflow-hidden flex flex-col rounded-md transition-transform transform hover:scale-105 hover:shadow-lg duration-300 ease-out'>
               <div className='bg-slate-400 size-36 w-52 rounded-md my-2 mx-4'>
               <img 
@@ -180,10 +200,12 @@ function MainPage() {
             <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
             <div className='pb-4'>
               {/* <img src={bk1} alt="" className='size-6'/> */}
-              <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={()=>toggleBookmark(recipe.title)}/>
-            </div>
+              <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
+              </div>
           </div>
         </div>
+        </Link>
+
        ))}
     </div>
 </div>

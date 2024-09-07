@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Dish, Ingredient
+from .models import Category, Dish, Ingredient, RecipeStep
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
@@ -46,20 +46,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username']  # Include 'id' and other fields as needed
         
+#For the steps of the recipe
+class RecipeStepSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= RecipeStep
+        fields= ['id','dish', 'step_number','instruction']
 
 #Combined Serializer for three models
 class DishDetailSerializer(serializers.ModelSerializer):
-    ingredients = serializers.SerializerMethodField()
+    ingredients = IngredientSerializer(many=True, read_only=True, source='ingredient_set')
+    steps = RecipeStepSerializer(many=True, read_only=True, source='recipestep_set')
     category = CategorySerializer(read_only=True)
-
-    class Meta:
-        model = Dish  # Specifies the model being serialized
-        fields = ['title', 'description', 'instructions', 'estimatedTime', 'image', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients']
-
-    def get_ingredients(self, obj):
-        # Fetches and serializes the related ingredients
-        ingredients = Ingredient.objects.filter(dish=obj.title)
-        return IngredientSerializer(ingredients, many=True).data
-
     
+    class Meta:
+        model = Dish
+        fields = ['title', 'description', 'instructions', 'estimatedTime', 'image', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients', 'steps']
+    
+
     

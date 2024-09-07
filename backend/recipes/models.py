@@ -27,4 +27,24 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
     
+class RecipeStep(models.Model):
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    step_number = models.PositiveIntegerField()
+    instruction = models.TextField()
+    
+    class Meta:
+        ordering = ['step_number']
+        
+    def save(self, *args, **kwargs):
+        if self.step_number is None:
+            # Count how many steps already exist for the dish
+            last_step = RecipeStep.objects.filter(dish=self.dish).count()
+            # Assign the next step number
+            self.step_number = last_step + 1
+        super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"Step {self.step_number} for {self.dish.title}"
+
+    
     
