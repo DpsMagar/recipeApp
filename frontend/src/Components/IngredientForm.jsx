@@ -4,9 +4,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "./AxiosInstance";
 import { formActivationStore } from "../Zustand Store/Zstore";
+import { Navigate, useNavigate } from "react-router-dom";
+
 
 const IngredientForm = (props) => {
   const { dish } = props;
+  const navigate = useNavigate()
   const{isFormActive,toggleFormActivation }= formActivationStore();
 
 
@@ -41,7 +44,9 @@ const IngredientForm = (props) => {
     const updatedData = data.ingredients.map(ingredient => ({
       ...ingredient,
       dish: dish
-    }));
+
+    })
+  );
     
     try {
       const response = await axiosInstance.post("ingredients/", updatedData);
@@ -49,6 +54,7 @@ const IngredientForm = (props) => {
       props.toggleFocus();
       toggleFormActivation();
       reset();
+      navigate('/steps')
     } catch (error) {
       console.error("Error creating ingredients:", error);
     }

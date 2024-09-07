@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "./AxiosInstance";
 import { useNavigate, useLocation } from "react-router-dom";
 import IngredientForm from "./IngredientForm";
-import StepsForms from "./StepsForms";
 import { focusStore, formActivationStore } from "../Zustand Store/Zstore";
 
 const DishForm = () => {
@@ -64,6 +63,7 @@ const DishForm = () => {
     console.log(data.title);
 
     setTitle(data.title);
+    localStorage.setItem('title',data.title)
 
     const formData = new FormData();
     formData.append("title", data.title);
@@ -197,11 +197,7 @@ const DishForm = () => {
         toggleFocus={toggleFocus}
         dish={title}
       />
-      <StepsForms
-        focus={focus}
-        toggleFocus={toggleFocus}
-        dish={title}
-      />
+      
     </div>
   );
 };

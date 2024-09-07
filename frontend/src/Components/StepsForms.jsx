@@ -3,22 +3,21 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axiosInstance from './AxiosInstance';
-import { formActivationStore } from '../Zustand Store/Zstore';
 const schema = yup.object().shape({
   steps: yup.array().of(
     yup.object().shape({
-      description: yup.string().required('Step description is required'),
+      instruction: yup.string().required('Step instruction is required'),
     })
   ).required('At least one step is required')
 });
 
-const StepsForms = ({ dish, focus, toggleFocus }) => {
-  const { isFormActive, toggleFormActivation } = formActivationStore();
+const StepsForms = () => {
+    const dish= localStorage.getItem('title')
   
   const { register, control, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      steps: [{ description: '' }]
+      steps: [{ instruction: '' }]
     }
   });
 
@@ -34,13 +33,14 @@ const StepsForms = ({ dish, focus, toggleFocus }) => {
         dish:dish,
         step_number:index
     }
+    
 
     ));
+    console.log(updatedData)
+
     try {
       const response = await axiosInstance.post('steps/',updatedData);
       console.log('Steps submitted successfully:', response.data);
-      toggleFocus();
-      toggleFormActivation();
       reset();
     } catch (error) {
       console.error('Error submitting steps:', error);
@@ -48,24 +48,23 @@ const StepsForms = ({ dish, focus, toggleFocus }) => {
   };
 
   return (
-    <div className={`max-w-4xl mx-auto p-4 shadow-md rounded-md h-[600px] overflow-hidden ${focus ? 'bg-white' : 'bg-gray-100'} ${isFormActive && 'opacity-50 pointer-events-none'}`}>
+    <div className={`max-w-4xl mx-auto p-4 shadow-md rounded-md h-[600px] overflow-hidden`}>
       <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
         <h2 className="text-xl font-semibold mb-4 text-gray-800">List the Steps {dish && `For ${dish}`}</h2>
 
         <div className="flex-1 overflow-auto">
           {fields.map((field, index) => (
             <div key={field.id} className="flex flex-col mb-3 p-2 border border-gray-300 rounded-md">
-              {/* Step Description Field */}
-              <label htmlFor={`steps[${index}].description`} className="text-xs font-medium text-gray-700">
-                Step Description
+              <label htmlFor={`steps[${index}].instruction`} className="text-xs font-medium text-gray-700">
+                Step instruction
               </label>
               <textarea
-                id={`steps[${index}].description`}
-                {...register(`steps[${index}].description`)}
-                className={`mt-1 block w-full px-2 py-1.5 border ${errors.steps?.[index]?.description ? 'border-red-500' : 'border-gray-300'} rounded-sm shadow-sm text-xs focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                id={`steps[${index}].instruction`}
+                {...register(`steps[${index}].instruction`)}
+                className={`mt-1 block w-full px-2 py-1.5 border ${errors.steps?.[index]?.instruction ? 'border-red-500' : 'border-gray-300'} rounded-sm shadow-sm text-xs focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
               />
-              {errors.steps?.[index]?.description && (
-                <p className="mt-1 text-xs text-red-600">{errors.steps[index].description.message}</p>
+              {errors.steps?.[index]?.instruction && (
+                <p className="mt-1 text-xs text-red-600">{errors.steps[index].instruction.message}</p>
               )}
 
               {/* Remove Step Button */}
@@ -83,7 +82,7 @@ const StepsForms = ({ dish, focus, toggleFocus }) => {
         {/* Add Step Button */}
         <button
           type="button"
-          onClick={() => append({ description: '' })}
+          onClick={() => append({ instruction: '' })}
           className="block w-full px-3 py-1.5 text-xs font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
           Add Step
