@@ -3,14 +3,16 @@ import { useForm, useFieldArray } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "./AxiosInstance";
-import { formActivationStore } from "../Zustand Store/Zstore";
-import { Navigate, useNavigate } from "react-router-dom";
+import { formActivationStore, IDandTitleStore } from "../Zustand Store/Zstore";
+import {  useNavigate } from "react-router-dom";
 
 
 const IngredientForm = (props) => {
   const { dish } = props;
   const navigate = useNavigate()
   const{isFormActive,toggleFormActivation }= formActivationStore();
+  const {setTitle}= IDandTitleStore()
+
 
 
   const schema = yup.object().shape({
@@ -54,7 +56,8 @@ const IngredientForm = (props) => {
       props.toggleFocus();
       toggleFormActivation();
       reset();
-      navigate('/steps')
+      setTitle(dish)
+      navigate(`/steps`)
     } catch (error) {
       console.error("Error creating ingredients:", error);
     }

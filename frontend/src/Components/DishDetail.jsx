@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './AxiosInstance';
 import { useParams, Link } from 'react-router-dom';
+import { IDandTitleStore } from '../Zustand Store/Zstore';
 
 const DishDetail = () => {
   const { title } = useParams(); // Get the dish title from URL parameters
@@ -8,6 +9,7 @@ const DishDetail = () => {
   const [error, setError] = useState(null);
   const name= localStorage.getItem('userName')
   const User = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
 
 
   useEffect(() => {

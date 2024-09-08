@@ -25,4 +25,10 @@ const formActivationStore= create((set)=>({
   }))
 }))
 
-export { bookmarkStore, focusStore, formActivationStore };
+const IDandTitleStore= create((set)=>({
+  id:null,
+  title:'',
+  setId:(id)=>set({id:id}),
+  setTitle:(title)=>set({title:title})
+}))
+export { bookmarkStore, focusStore, formActivationStore, IDandTitleStore };
