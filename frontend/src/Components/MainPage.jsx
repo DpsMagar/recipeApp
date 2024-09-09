@@ -35,6 +35,8 @@ function MainPage() {
     const fetchRecipes = async () => {
       try {
         const response = await axiosInstance.get('/dishes/');
+        console.log(response.data);
+        
         const items = response.data;
 
         const category1 = items.filter(item => item.category === 1);
@@ -54,19 +56,19 @@ function MainPage() {
     
     fetchRecipes();
   }, [userId]);
-
-  const handleBookmark=(e, recipeTitle)=>{
-    toggleBookmark(recipeTitle);
-    e.preventDefault()        
-    try {
-      const response= axiosInstance.post(`dishes/${recipeTitle}/bookmark/`)
-      console.log('Bookmark toggled successfully');
-    } catch (error) {
-      console.log(error);
-      
-    }
-
+  
+ const handleBookmark = async (e, recipeTitle) => {
+  e.preventDefault();
+  toggleBookmark(recipeTitle); // Update Zustand store
+  
+  try {
+    await axiosInstance.post(`dishes/${recipeTitle}/bookmark/`);
+    console.log('Bookmark toggled successfully');
+  } catch (error) {
+    console.error('Error toggling bookmark:', error);
   }
+};
+
 
   return (
     <div className='w-full h-full bg-gray-800'>
@@ -93,7 +95,7 @@ function MainPage() {
                 <div className='flex justify-between mx-2 mt-5'>
                   <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
                   <div className='pb-4'>
-                    <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title, )}/>
+                  <img src={(recipe.isBookmarked)|| bookmarks[recipe.title] ?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
                   </div>
                 </div>
               </div>
@@ -208,7 +210,7 @@ function MainPage() {
             <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
             <div className='pb-4'>
               {/* <img src={bk1} alt="" className='size-6'/> */}
-              <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
+              <img src={!bookmarks[recipe.title] ?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
               </div>
           </div>
         </div>

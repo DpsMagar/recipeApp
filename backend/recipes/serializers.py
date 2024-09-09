@@ -9,12 +9,12 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class DishSerializer(serializers.ModelSerializer):
-    is_bookmarked_by_user = serializers.SerializerMethodField()
+    isBookmarked = serializers.SerializerMethodField()
     class Meta:
         model = Dish
-        fields = [ 'title', 'description','estimatedTime', 'instructions','image', 'user', 'category', 'created_at', 'updated_at', 'is_bookmarked_by_user']
+        fields = [ 'title', 'description','estimatedTime', 'instructions','image', 'user', 'category', 'created_at', 'updated_at', 'isBookmarked']
         
-    def get_is_bookmarked_by_user(self, obj):
+    def get_isBookmarked(self, obj):
         request = self.context.get('request')
         if request and request.user.is_authenticated:
             return request.user in obj.bookmarked_by.all()

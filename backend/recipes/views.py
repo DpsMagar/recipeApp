@@ -136,12 +136,12 @@ class ToggleBookmarkView(APIView):
         if user.is_authenticated:
             if user in dish.bookmarked_by.all():
                 dish.bookmarked_by.remove(user)
-                is_bookmarked = False
+                isBookmarked = False
             else:
                 dish.bookmarked_by.add(user)
-                is_bookmarked = True
+                isBookmarked = True
 
-            return Response({'is_bookmarked': is_bookmarked})
+            return Response({'isBookmarked': isBookmarked})
         return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
     
     
