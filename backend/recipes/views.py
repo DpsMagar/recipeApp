@@ -11,6 +11,7 @@ from .serializers import (
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken 
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.shortcuts import get_object_or_404
 
 # User registration view
 class userRegisterView(generics.CreateAPIView):
@@ -83,6 +84,11 @@ class DishListCreateView(generics.ListCreateAPIView):
         user_recipes = Dish.objects.filter(user=user)
         combined_recipes = public_recipes | user_recipes
         return combined_recipes
+    
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context.update({'request': self.request})
+        return context
 
 class DishRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Dish.objects.all()
@@ -119,5 +125,23 @@ class IngredientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView)
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    
+    
+#For the bookmarks
+class ToggleBookmarkView(APIView):
+    def post(self, request, title):
+        dish = get_object_or_404(Dish, title=title)
+        user = request.user
+
+        if user.is_authenticated:
+            if user in dish.bookmarked_by.all():
+                dish.bookmarked_by.remove(user)
+                is_bookmarked = False
+            else:
+                dish.bookmarked_by.add(user)
+                is_bookmarked = True
+
+            return Response({'is_bookmarked': is_bookmarked})
+        return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
     
     

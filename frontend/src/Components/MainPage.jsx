@@ -57,7 +57,15 @@ function MainPage() {
 
   const handleBookmark=(e, recipeTitle)=>{
     toggleBookmark(recipeTitle);
-    e.preventDefault()    
+    e.preventDefault()        
+    try {
+      const response= axiosInstance.post(`dishes/${recipeTitle}/bookmark/`)
+      console.log('Bookmark toggled successfully');
+    } catch (error) {
+      console.log(error);
+      
+    }
+
   }
 
   return (
@@ -85,7 +93,7 @@ function MainPage() {
                 <div className='flex justify-between mx-2 mt-5'>
                   <div className='text-sm text-gray-800'>{recipe.estimatedTime} mins</div>
                   <div className='pb-4'>
-                    <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title)}/>
+                    <img src={!bookmarks[recipe.title]?bk1:bk2} alt="" className='size-6' onClick={(e) => handleBookmark(e, recipe.title, )}/>
                   </div>
                 </div>
               </div>

@@ -9,9 +9,16 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
 
 class DishSerializer(serializers.ModelSerializer):
+    is_bookmarked_by_user = serializers.SerializerMethodField()
     class Meta:
         model = Dish
-        fields = [ 'title', 'description','estimatedTime', 'instructions','image', 'user', 'category', 'created_at', 'updated_at']
+        fields = [ 'title', 'description','estimatedTime', 'instructions','image', 'user', 'category', 'created_at', 'updated_at', 'is_bookmarked_by_user']
+        
+    def get_is_bookmarked_by_user(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return request.user in obj.bookmarked_by.all()
+        return False
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,7 +67,7 @@ class DishDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Dish
-        fields = ['title', 'description', 'instructions', 'estimatedTime', 'image', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients', 'steps']
+        fields = ['title', 'description', 'instructions', 'estimatedTime', 'image', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients', 'steps','bookmarked_by',]
     
 
     
