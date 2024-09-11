@@ -3,6 +3,17 @@ import { create } from 'zustand';
 
 const bookmarkStore = create((set) => ({
   bookmarks: {},
+
+  // Function to initialize bookmarks from API response
+  setBookmarks: (dishes) => set((state) => {
+    const newBookmarks = dishes.reduce((acc, dish) => {
+      acc[dish.title] = dish.isBookmarked;
+      return acc;
+    }, {});
+    return { bookmarks: newBookmarks };
+  }),
+
+  // Function to toggle the bookmark state
   toggleBookmark: (title) => set((state) => ({
     bookmarks: {
       ...state.bookmarks,
@@ -10,6 +21,7 @@ const bookmarkStore = create((set) => ({
     }
   }))
 }));
+
 
 const focusStore = create((set) => ({
   focus: true,
