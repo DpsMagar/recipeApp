@@ -76,7 +76,7 @@ function MainPage() {
   };
 
   return (
-    <div className='w-full h-full bg-gray-800 '>
+    <div className='w-full h-full bg-gray-900 '>
       {/* Category 1 */}
       <div className='p-4 flex flex-col'>
         <div className='flex gap-8 text-white'>
