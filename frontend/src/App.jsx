@@ -11,7 +11,7 @@ import DishForm from './Components/DishForm';
 import IngredientForm from './Components/IngredientForm';
 import DishDetail from './Components/DishDetail';
 import StepsForms from './Components/StepsForms';
-
+import Bookmarks from './Components/Bookmarks';
 function App() {
     return (
         <Router>
@@ -21,11 +21,12 @@ function App() {
                 <Route path="/register" element={<Layout><Register/></Layout>} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/about" element={<Layout><About/></Layout>}/>
-                <Route path="/home" element={<Layout><MainPage/></Layout>}></Route>
+                <Route path="/home" element={<Layout><MainPage/></Layout>}/>
                 <Route path="/home/create" element={<Layout><DishForm/></Layout>} />
                 <Route path="/ingredientForm" element={<Layout><IngredientForm/></Layout>} />
                 <Route path="/detail/:title" element={<Layout><DishDetail/></Layout>} />
                 <Route path="/steps" element={<Layout><StepsForms/></Layout>} />
+                <Route path="/bookmarks" element={<Layout><Bookmarks/></Layout>} />
 
             </Routes>
         </Router>

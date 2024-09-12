@@ -9,6 +9,8 @@ const DishDetail = () => {
   const [error, setError] = useState(null);
   const name= localStorage.getItem('userName')
   const User = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  sessionStorage.setItem('isMainPage','false')
+
 
 
 

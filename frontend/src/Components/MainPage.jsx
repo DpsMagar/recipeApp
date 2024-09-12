@@ -13,6 +13,9 @@ function MainPage() {
   const [category4Items, setCategory4Items] = useState([]);
   const { bookmarks, toggleBookmark, setBookmarks } = bookmarkStore();
   const [userId, setUserId] = useState(null);
+  sessionStorage.setItem('isMainPage','true')
+
+
 
   useEffect(() => {
     const fetchUserData = async () => { 

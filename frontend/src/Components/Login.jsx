@@ -7,10 +7,15 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();  // Hook to navigate programmatically
+    sessionStorage.setItem('isLoggedIn','false')
+    sessionStorage.setItem('isMainPage','false')
+
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
         setError('');  // Clear any previous error
+
         if (!username || !password) {
             setError('Username and password are required');
             return;
@@ -28,6 +33,7 @@ const Login = () => {
             localStorage.setItem('refresh_token', refresh);
             localStorage.setItem('userName', username);
             sessionStorage.setItem('isLoggedIn','true')
+            sessionStorage.setItem('isMainPage','true')
 
             navigate('/home');
         } catch (err) {
