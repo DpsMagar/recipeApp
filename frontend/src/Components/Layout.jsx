@@ -23,7 +23,7 @@
     }, []);
 
     return (
-      <div className={`min-h-screen flex flex-col ${isLoggedIn ? 'logged-in' : 'logged-out'}`}>
+      <div className={`min-h-screen flex flex-col ${isLoggedIn ? 'logged-in' : 'logged-out'} scrollable-container`}>
         <header className="bg-gray-900 shadow-md py-4 px-6 flex items-center justify-between">
           {/* Left side: Logo */}
           <div className="flex-shrink-0">

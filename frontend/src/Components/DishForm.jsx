@@ -14,6 +14,8 @@ const DishForm = () => {
   const location = useLocation();
   const { focus, toggleFocus } = focusStore();
   const { isFormActive, toggleFormActivation } = formActivationStore();
+  sessionStorage.setItem('isMainPage','false')
+
 
   useEffect(() => {
     const cat = location.state?.category;

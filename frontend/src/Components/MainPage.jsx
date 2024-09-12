@@ -5,6 +5,7 @@ import bk2 from "../Images/b2.png";
 import {bookmarkStore} from '../Zustand Store/Zstore';
 import { Link } from 'react-router-dom';
 
+
 function MainPage() {
   const [error, setError] = useState(null);
   const [category1Items, setCategory1Items] = useState([]);
@@ -14,6 +15,7 @@ function MainPage() {
   const { bookmarks, toggleBookmark, setBookmarks } = bookmarkStore();
   const [userId, setUserId] = useState(null);
   sessionStorage.setItem('isMainPage','true')
+  sessionStorage.setItem('isLoggedIn','true')
 
 
 
@@ -74,7 +76,7 @@ function MainPage() {
   };
 
   return (
-    <div className='w-full h-full bg-gray-800'>
+    <div className='w-full h-full bg-gray-800 '>
       {/* Category 1 */}
       <div className='p-4 flex flex-col'>
         <div className='flex gap-8 text-white'>

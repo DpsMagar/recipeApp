@@ -10,3 +10,35 @@
     margin-top: 500px;
     margin-left: 1300px;
 }
+/* styles.css */
+
+/* Container that will have the custom scrollbar */
+.scrollable-container {
+    max-height: 600px; /* Adjust based on your layout */
+    overflow-y: auto;
+    /* Ensure that the container has a height to activate scrolling */
+  }
+  
+  /* Webkit browsers (Chrome, Safari) */
+  .scrollable-container::-webkit-scrollbar {
+    width: 8px; /* Thinner scrollbar */
+  }
+  
+  .scrollable-container::-webkit-scrollbar-thumb {
+    background: #333; /* Dark color for the thumb */
+    border-radius: 10px;
+    border: 2px solid #000; /* Slight border to make it stand out */
+  }
+  
+  .scrollable-container::-webkit-scrollbar-track {
+    background: #111; /* Dark background for the track */
+    border-radius: 10px;
+  }
+  
+  /* Firefox */
+  .scrollable-container {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #333 #111; /* Thumb and track color */
+  }
+  
+  

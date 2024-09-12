@@ -12,6 +12,9 @@ const IngredientForm = (props) => {
   const navigate = useNavigate()
   const{isFormActive,toggleFormActivation }= formActivationStore();
   const {setTitle}= IDandTitleStore()
+  sessionStorage.setItem('isMainPage','false')
+  
+
 
 
 

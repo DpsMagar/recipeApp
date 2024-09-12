@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 
 function Bookmarks() {
     const [items, setItems] = useState([]);
+    sessionStorage.setItem('isMainPage','false')
+
+
 
 
     useEffect(() => {
