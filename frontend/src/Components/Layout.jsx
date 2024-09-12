@@ -7,13 +7,22 @@ const Layout = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    // Function to check the login status
     const checkStatus = () => {
       const userLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
       setIsLoggedIn(userLoggedIn);
     };
-
-    checkStatus(); 
+  
+    // Call the function initially to set the state
+    checkStatus();
+  
+    // Set up the interval to call the function repeatedly
+    const intervalId = setInterval(checkStatus, 1000); // 1 second interval, adjust as needed
+  
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
   }, []);
+  
 
   return (
     <div className={`min-h-screen flex flex-col ${isLoggedIn ? 'logged-in' : 'logged-out'} scrollable-container`}>
