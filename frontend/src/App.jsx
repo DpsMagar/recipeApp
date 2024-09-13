@@ -26,8 +26,7 @@ function App() {
                 <Route path="/ingredientForm" element={<Layout><IngredientForm/></Layout>} />
                 <Route path="/detail/:title" element={<Layout><DishDetail/></Layout>} />
                 <Route path="/steps" element={<Layout><StepsForms/></Layout>} />
-                <Route path="/bookmarks" element={<Layout><Bookmarks/></Layout>} />
-
+                <Route path="/home/:type" element={<Layout><Bookmarks/></Layout>} />
             </Routes>
         </Router>
     );

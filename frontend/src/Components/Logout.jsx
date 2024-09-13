@@ -1,16 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import axiosInstance from './AxiosInstance';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from './AxiosInstance';
 
 const Logout = () => {
-    const navigate = useNavigate();    
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
-            // Retrieve the refresh token from local storage
             const refreshToken = localStorage.getItem('refresh_token');
 
-            // If no refresh token, remove tokens and redirect
             if (!refreshToken) {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
@@ -19,31 +17,41 @@ const Logout = () => {
                 return;
             }
 
-            // Send a request to the logout endpoint to blacklist the refresh token
             await axiosInstance.post('logout/', { refresh_token: refreshToken });
 
-            // Remove tokens from local storage
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             sessionStorage.removeItem('isLoggedIn');
 
-            // Redirect to the login page
             navigate('/login');
         } catch (err) {
             console.error('Logout failed:', err);
-            // Remove tokens anyway and redirect
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             sessionStorage.removeItem('isLoggedIn');
-
             navigate('/login');
         }
     };
 
     return (
-        <button onClick={handleLogout} className="bg-red-500 text-white p-2 rounded-lg">
-            Logout
-        </button>
+        <div className="max-w-md mx-auto mt-8 p-4 border rounded-lg shadow-lg bg-white">
+            <h2 className="text-2xl font-bold mb-4 text-center">Logout</h2>
+            <p className="text-gray-600 mb-6 text-center">
+                Are you sure you want to log out?
+            </p>
+            <button 
+                onClick={handleLogout} 
+                className="w-full bg-red-500 hover:bg-red-600 text-white p-3 rounded-lg font-semibold transition duration-300 ease-in-out shadow-md"
+            >
+                Logout
+            </button>
+            <button 
+                onClick={() => navigate('/home')} 
+                className="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-700 p-3 rounded-lg font-semibold transition duration-300 ease-in-out shadow-md"
+            >
+                Cancel
+            </button>
+        </div>
     );
 };
 

@@ -27,6 +27,8 @@ function MainPage() {
         const user = response.data.find((user) => user.username === userName);
         if (user) {
           setUserId(user.id);
+          sessionStorage.setItem('userID',user.id)
+
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
