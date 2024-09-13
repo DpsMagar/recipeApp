@@ -41,4 +41,23 @@
     scrollbar-color: #333 #111; /* Thumb and track color */
   }
   
+  .toast {
+    background-color: rgba(255, 0, 0, 0.7); /* Semi-transparent red */
+    color: white;
+    position: absolute;
+    border-radius: 5px;
+    transform: translateY(-50%);
+    z-index: 1000;
+    margin-left: -160px;
+    margin-top: 57px;
+    font-size: 0.9rem;
+  }
+  
+  
+  @keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+  }
   

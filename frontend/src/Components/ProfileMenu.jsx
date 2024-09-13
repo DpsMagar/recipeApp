@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import dp from '../Images/pp.webp';
 import logoutIcon from '../Images/logout.svg'; 
 import axiosInstance from './AxiosInstance';
+import { bookmarkStore } from '../Zustand Store/Zstore';
 
 const ProfileMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,7 +17,8 @@ const ProfileMenu = () => {
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   };
-
+ 
+  
   useEffect(() => {
     const fetchUserData = async () => { 
       try {
