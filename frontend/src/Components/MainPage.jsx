@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function MainPage() {
   const [error, setError] = useState(null);
-  const [errorName, setErrorName] = useState(null);
   const [category1Items, setCategory1Items] = useState([]);
   const [category2Items, setCategory2Items] = useState([]);
   const [category3Items, setCategory3Items] = useState([]);
@@ -19,8 +18,7 @@ function MainPage() {
   sessionStorage.setItem('isLoggedIn', 'true');
   const navigate = useNavigate();
   const RecipeNames= Object.keys(bookmarks)  
-
-
+  
   function showToast(message) {
     const toast = document.createElement("div");
     toast.innerText = message;

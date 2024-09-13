@@ -4,7 +4,7 @@ from .views import (
     userRegisterView,LoginView,
     CategoryListCreateView, CategoryRetrieveUpdateDestroyView,
     DishListCreateView, DishRetrieveUpdateDestroyView,
-    IngredientListCreateView, IngredientRetrieveUpdateDestroyView,LogoutView, UserListView,RecipeListCreateView, RecipeRetrieveUpdateDestroyView,ToggleBookmarkView
+    IngredientListCreateView, IngredientRetrieveUpdateDestroyView,LogoutView, UserListView,RecipeListCreateView, RecipeRetrieveUpdateDestroyView,ToggleBookmarkView, RecipeOfTheDayView
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -41,6 +41,10 @@ urlpatterns = [
     
     #endpoint for the bookmarks of the field
     path('dishes/<str:title>/bookmark/', ToggleBookmarkView.as_view(), name='toggle_bookmark'),
+    
+    #For the recipe of the day
+    path('rod/', RecipeOfTheDayView.as_view(), name='recipe_of_the_day'),
+    
         
 ]           
     

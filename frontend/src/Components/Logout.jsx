@@ -13,7 +13,7 @@ const Logout = () => {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 sessionStorage.removeItem('isLoggedIn');
-                navigate('/home');
+                navigate('/');
                 return;
             }
 
@@ -23,13 +23,13 @@ const Logout = () => {
             localStorage.removeItem('refresh_token');
             sessionStorage.removeItem('isLoggedIn');
 
-            navigate('/login');
+            navigate('/');
         } catch (err) {
             console.error('Logout failed:', err);
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             sessionStorage.removeItem('isLoggedIn');
-            navigate('/login');
+            navigate('/');
         }
     };
 
@@ -46,7 +46,7 @@ const Logout = () => {
                 Logout
             </button>
             <button 
-                onClick={() => navigate('/home')} 
+                onClick={() => navigate('/')} 
                 className="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-700 p-3 rounded-lg font-semibold transition duration-300 ease-in-out shadow-md"
             >
                 Cancel

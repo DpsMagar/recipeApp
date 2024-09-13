@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from .models import Category, Dish, Ingredient, RecipeStep
 from .serializers import (
     CategorySerializer, DishSerializer, IngredientSerializer,
-    RegisterSerializer, UserSerializer, DishDetailSerializer,RecipeStepSerializer
+    RegisterSerializer, UserSerializer, DishDetailSerializer,RecipeStepSerializer, recipeOfTheDaySerializer
 )
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken 
@@ -144,4 +144,7 @@ class ToggleBookmarkView(APIView):
             return Response({'isBookmarked': isBookmarked})
         return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
     
-    
+class RecipeOfTheDayView(generics.ListAPIView):
+    queryset= Dish.objects.all()
+    serializer_class= recipeOfTheDaySerializer
+    permission_classes= [AllowAny]

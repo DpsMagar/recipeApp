@@ -70,4 +70,8 @@ class DishDetailSerializer(serializers.ModelSerializer):
         fields = ['title', 'description', 'instructions', 'estimatedTime', 'image', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients', 'steps','bookmarked_by',]
     
 
+class recipeOfTheDaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model= Dish
+        fields = [ 'title', 'description','estimatedTime','user', 'category', ]
     

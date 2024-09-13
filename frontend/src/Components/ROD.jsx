@@ -1,6 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect, } from 'react';
+import axios from 'axios';
 
 function ROD() {
+  const[recipes, setRecipes]= useState([])
+  const[data, setData]= useState([])
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/rod/');
+        const items = response.data;  
+        const recipeTitles = items.map(recipe => recipe.title);
+        setRecipes(recipeTitles);
+
+        setData(items)              
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchRecipes();
+  }, []);
+  function getDailyRandomValue() {
+    const today = new Date().getDate();     
+    const randomIndex = today % recipes.length;     
+    console.log(recipes[randomIndex]);
+    return recipes[randomIndex];
+  }
+  const randomValue = getDailyRandomValue();
+
   return (
     <div className='absolute mx-12 my-80'>
       <div className=" top-1/3 left-1/4 bg-white p-4 rounded-md shadow-lg w-96">
