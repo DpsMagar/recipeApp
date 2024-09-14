@@ -3,6 +3,7 @@ import axios from 'axios';
 
 function useFetchRecipes() {
   const [recipes, setRecipes] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -10,6 +11,11 @@ function useFetchRecipes() {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/rod/');
         const items = response.data;
+      console.log(items);
+        
+        const recipeDes = items.map(recipe => recipe.description);
+
+        setData(recipeDes)
         const recipeTitles = items.map(recipe => recipe.title);
         setRecipes(recipeTitles);
         setLoading(false);
@@ -18,18 +24,17 @@ function useFetchRecipes() {
         setLoading(false);
       }
     };
-
     fetchRecipes();
   }, []);
-
-  return { recipes, loading };
+  return { recipes, loading, data };
 }
 
 function ROD() {
-  const { recipes, loading } = useFetchRecipes();
+  const { recipes, loading, data } = useFetchRecipes();
   const [randomIndex, setRandomIndex] = useState();
 
   useEffect(() => {
+    
     if (recipes.length > 0) {
       const getDailyRandomValue = () => {
         const today = new Date().getDate();
@@ -45,7 +50,6 @@ function ROD() {
     return <div>Loading...</div>;
   }
 
-  const recipeOfTheDay = randomIndex !== undefined ? recipes[randomIndex] : 'Loading...';
 
   return (
     <div className='absolute mx-12 my-80'>
@@ -53,9 +57,9 @@ function ROD() {
         <div className="bg-red-500 text-white px-2 py-1 inline-block rounded-md text-sm mb-2">
           RECIPE OF THE DAY
         </div>
-        <h2 className="text-xl font-bold mb-2">{recipeOfTheDay}</h2>
+        <h2 className="text-xl font-bold mb-2">{recipes[randomIndex]}</h2>
         <p className="text-gray-700 mb-4">
-          Toss this updated take on a classic Mediterranean preparation with lettuce or pasta.
+          {data[randomIndex]}
         </p>
         <p className="text-gray-500">By Genevieve Ko</p>
       </div> 
