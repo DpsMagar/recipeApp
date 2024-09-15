@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function MainPage() {
   const [error, setError] = useState(null);
+  const [userName, setUserName] = useState([]);
   const [category1Items, setCategory1Items] = useState([]);
   const [category2Items, setCategory2Items] = useState([]);
   const [category3Items, setCategory3Items] = useState([]);
@@ -35,6 +36,7 @@ function MainPage() {
     const fetchUserData = async () => {
       try {
         const response = await axiosInstance.get("users/");
+        setUserName(response.data)
         const userName = localStorage.getItem("userName");
         const user = response.data.find((user) => user.username === userName);
         if (user) {

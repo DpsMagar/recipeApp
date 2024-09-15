@@ -118,7 +118,7 @@ class IngredientListCreateView(generics.ListCreateAPIView):
 
 class IngredientRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):  
     queryset = Ingredient.objects.all()
-    serializer_class = IngredientSerializer
+    serializer_class = IngredientSerializer 
     permission_classes = [IsAuthenticated] 
     
 #User detail view
@@ -132,7 +132,7 @@ class ToggleBookmarkView(APIView):
     def post(self, request, title):
         dish = get_object_or_404(Dish, title=title)
         user = request.user
-
+        
         if user.is_authenticated:
             if user in dish.bookmarked_by.all():
                 dish.bookmarked_by.remove(user)

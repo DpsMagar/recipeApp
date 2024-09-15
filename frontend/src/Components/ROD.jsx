@@ -1,23 +1,33 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import axiosInstance from './AxiosInstance';
 
 function useFetchRecipes() {
   const [recipes, setRecipes] = useState([]);
   const [data, setData] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [uid, setUid] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/rod/');
-        const items = response.data;
-      console.log(items);
+        console.log(response.data);
         
+        const user = await axiosInstance.get('/users/');
+        console.log(user.data[0].username);
+        const users= user.data
+        const items = response.data;
         const recipeDes = items.map(recipe => recipe.description);
-
         setData(recipeDes)
         const recipeTitles = items.map(recipe => recipe.title);
         setRecipes(recipeTitles);
+        const recipeUsers = users.map(recipe => recipe.username);
+        setUsers(recipeUsers)
+        const id = items.map(recipe => recipe.user);
+        setUid(id)
+
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -26,12 +36,16 @@ function useFetchRecipes() {
     };
     fetchRecipes();
   }, []);
-  return { recipes, loading, data };
+  return { recipes, loading, data, users, uid };
 }
 
 function ROD() {
-  const { recipes, loading, data } = useFetchRecipes();
+  const { recipes, loading, data, users, uid } = useFetchRecipes();
   const [randomIndex, setRandomIndex] = useState();
+  console.log(users);
+  console.log(uid);
+  
+  
 
   useEffect(() => {
     
@@ -60,8 +74,8 @@ function ROD() {
         <h2 className="text-xl font-bold mb-2">{recipes[randomIndex]}</h2>
         <p className="text-gray-700 mb-4">
           {data[randomIndex]}
-        </p>
-        <p className="text-gray-500">By Genevieve Ko</p>
+        </p>  
+        <p className="text-gray-500">By {users[uid[randomIndex]]}</p>
       </div> 
     </div>
   );
