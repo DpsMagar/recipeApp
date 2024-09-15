@@ -20,18 +20,23 @@ jobs:
 
       - name: Create and start virtual environment
         run: |
-          python -m venv venv
-          source venv/bin/activate
+          python -m venv myproject-env
+          source myproject-env/bin/activate
+
+      - name: List root directory contents
+        run: ls -la
+
+      - name: List backend directory contents
+        run: ls -la backend
 
       - name: Install dependencies
         run: |
-          source venv/bin/activate
-          pip install -r backend/requirements.txt  # Adjust if `requirements.txt` is in `backend`
-
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+          cd backend
+          source ../myproject-env/bin/activate
+          pip install -r requirements.txt
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "venv/*"  # Exclude virtual environment
+        run: zip -r release.zip . -x "myproject-env/*"
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -46,7 +51,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
