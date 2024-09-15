@@ -18,10 +18,11 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Create and start virtual environment
+      - name: Create and start virtual environment and install dependencies
         run: |
           python -m venv myproject-env
           source myproject-env/bin/activate
+          pip install -r backend/requirements.txt
 
       - name: List root directory contents
         run: ls -la
@@ -29,14 +30,9 @@ jobs:
       - name: List backend directory contents
         run: ls -la backend
 
-      - name: Install dependencies
-        run: |
-          cd backend
-          source ../myproject-env/bin/activate
-          pip install -r requirements.txt
-
       - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "myproject-env/*"
+        run: |
+          zip -r release.zip . -x "myproject-env/*"
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
