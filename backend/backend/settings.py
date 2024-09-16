@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOWED_ORIGINS = ['https://black-meadow-00e555500.5.azurestaticapps.net',]
+CORS_ALLOWED_ORIGINS = ['*',]
 
 
 CORS_ALLOW_CREDENTIALS = True
