@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/941909b2-1a15-41de-aac6-0e33f5dfef50/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/recipeAppDjango",
-    "appService.deploySubpath": "."
-}
