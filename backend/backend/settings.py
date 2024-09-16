@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-m7-85zwev%13mx_sl1ipxvll06xu9(_v#z7gj79j0o_00o6(e7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['recipeappdjango.azurewebsites.net']
+# ALLOWED_HOSTS = ['recipeappdjango.azurewebsites.net']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -137,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS_ALLOW_ALL_ORIGINS = True
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173',]
+CORS_ALLOWED_ORIGINS = ['https://black-meadow-00e555500.5.azurestaticapps.net',]
 
 
 CORS_ALLOW_CREDENTIALS = True
