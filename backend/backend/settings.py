@@ -142,7 +142,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'https://recipe-app-omega-ruby.vercel.app',
-    'http://localhost:5173',  # For local development
+    'http://localhost:5173', 
+    'https://recipe-app-git-main-dipesh-magars-projects.vercel.app',
 ]
 CORS_ALLOW_CREDENTIALS = True
 
