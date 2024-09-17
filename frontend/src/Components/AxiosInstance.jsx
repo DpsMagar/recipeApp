@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_URL= import.meta.env.VITE_REACT_APP_API_URL;
+const API_URL= import.meta.env.VITE_API_URL;
 
 // Create an axios instance
 const axiosInstance = axios.create({
