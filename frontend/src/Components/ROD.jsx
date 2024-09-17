@@ -12,7 +12,7 @@ function useFetchRecipes() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/rod/');
+        const response = await axios.get('https://recipe-app-django-react-azure-c6c0gkbwhmcubhhz.westindia-01.azurewebsites.net/api/rod');
         console.log(response.data);
         
         const user = await axiosInstance.get('/users/');
