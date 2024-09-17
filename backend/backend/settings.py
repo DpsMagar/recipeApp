@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,14 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m7-85zwev%13mx_sl1ipxvll06xu9(_v#z7gj79j0o_00o6(e7'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-# ALLOWED_HOSTS = ['recipeappdjango.azurewebsites.net']
-ALLOWED_HOSTS = ['*']
-
+# Set allowed hosts via environment variable
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'recipeappdjango.azurewebsites.net').split(',')
 
 # Application definition
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    'channels',
+    'channels',  # If not using Redis, you can still leave 'channels' for WebSocket or background tasks.
     'whitenoise.runserver_nostatic',
 ]
 
@@ -59,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -131,18 +130,23 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = os.environ.get("DJANGO_STATIC_URL", "/static/")
 STATIC_ROOT = os.environ.get("DJANGO_STATIC_ROOT", "./static/")
 
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOWED_ORIGINS = ['https://recipe-app-omega-ruby.vercel.app',]
-
-
+# CORS settings
+CORS_ALLOWED_ORIGINS = [
+    'https://recipe-app-omega-ruby.vercel.app',
+    'http://localhost:5173',  # For local development
+]
 CORS_ALLOW_CREDENTIALS = True
 
+# JWT Authentication
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -151,7 +155,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
-from datetime import timedelta
+
+# JWT Token settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
@@ -166,17 +171,18 @@ SIMPLE_JWT = {
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
 }
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
 ASGI_APPLICATION = 'backend.asgi.application'
 
-
+# Omit Redis configuration since you're not using it
+# You can still use Channels for WebSockets or background tasks
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
     },
 }
+
+# Additional security settings for production
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
