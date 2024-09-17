@@ -1,8 +1,9 @@
 import axios from 'axios';
+const API_URL= process.env.REACT_APP_API_URL;
 
 // Create an axios instance
 const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/', // Update with your Django backend URL
+    baseURL: `${API_URL}/api`, // Update with your Django backend URL
     timeout: 5000,
     
 });
