@@ -1,7 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-# More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
-
 name: Build and deploy Python app to Azure Web App - recipe-app-django-react-azure
 
 on:
@@ -34,18 +30,6 @@ jobs:
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
-      - name: Zip artifact for deployment
-        working-directory: ./backend  # Specify the backend directory
-        run: zip release.zip ./* -r
-
-      - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
-        with:
-          name: python-app
-          path: |
-            backend/release.zip
-            !backend/venv/
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -56,14 +40,9 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: python-app
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Unzip artifact for deployment
-        run: unzip backend/release.zip
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -73,7 +52,7 @@ jobs:
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
         with:
           app-name: 'recipe-app-django-react-azure'
           slot-name: 'Production'
+          package: ./backend  # Deploy directly from the backend directory
