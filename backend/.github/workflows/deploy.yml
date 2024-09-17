@@ -25,7 +25,7 @@ jobs:
           source venv/bin/activate
 
       - name: Install dependencies from backend folder
-        run: pip install -r requirements.txt  # Specify the correct path to requirements.txt
+        run: pip install -r backend/requirements.txt  # Specify the correct path to requirements.txt
 
       - name: Zip backend folder for deployment
         run: zip -r release.zip ./backend  # Zip only the backend folder
