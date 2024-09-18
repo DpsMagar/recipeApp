@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
         }
 
         // Dynamically set Content-Type header if sending FormData
-        if (config.data instanceof FormData) {
+        if (config.data instanceof FormData) { 
             // Axios will automatically set Content-Type to multipart/form-data for FormData
             delete config.headers['Content-Type']; // Remove Content-Type so Axios can set it
         }
