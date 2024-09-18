@@ -1,54 +1,62 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import axiosInstance from './AxiosInstance';
 
-function useFetchRecipes() {
+function ROD() {
   const [recipes, setRecipes] = useState([]);
   const [data, setData] = useState([]);
   const [users, setUsers] = useState([]);
   const [uid, setUid] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [randomIndex, setRandomIndex] = useState();
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
+        // Fetch recipes
         const response = await axios.get('https://recipe-app-django-react-azure-c6c0gkbwhmcubhhz.westindia-01.azurewebsites.net/api/rod');
-        console.log(response.data);
         
+        // Fetch users
         const user = await axiosInstance.get('/users/');
-        console.log(user.data[0].username);
-        const users= user.data
+
+        // Process recipes and users
+        const usersData = user.data;
         const items = response.data;
-        const recipeDes = items.map(recipe => recipe.description);
-        setData(recipeDes)
-        const recipeTitles = items.map(recipe => recipe.title);
-        setRecipes(recipeTitles);
-        const recipeUsers = users.map(recipe => recipe.username);
-        setUsers(recipeUsers)
-        const id = items.map(recipe => recipe.user);
-        setUid(id)
+
+        if (items.length > 0) {
+          const recipeDes = items.map(recipe => recipe.description || 'No description available');
+          setData(recipeDes);
+
+          const recipeTitles = items.map(recipe => recipe.title || 'No title available');
+          setRecipes(recipeTitles);
+
+          const recipeUsers = usersData.map(user => user.username || 'Unknown');
+          setUsers(recipeUsers);
+
+          const id = items.map(recipe => recipe.user || 'No user ID');
+          setUid(id);
+        } else {
+          // Handle empty data case
+          setData([]);
+          setRecipes([]);
+          setUsers([]);
+          setUid([]);
+        }
 
         setLoading(false);
       } catch (error) {
-        console.error(error);
+        // Improved error handling
+        console.error('Error fetching recipes or users:', error.response?.data || error.message || error);
+        setError('An error occurred while fetching data.');
         setLoading(false);
       }
     };
+
     fetchRecipes();
   }, []);
-  return { recipes, loading, data, users, uid };
-}
-
-function ROD() {
-  const { recipes, loading, data, users, uid } = useFetchRecipes();
-  const [randomIndex, setRandomIndex] = useState();
-  console.log(users);
-  console.log(uid);
-  
-  
 
   useEffect(() => {
-    
     if (recipes.length > 0) {
       const getDailyRandomValue = () => {
         const today = new Date().getDate();
@@ -64,6 +72,9 @@ function ROD() {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div className="text-red-500">Error: {error}</div>;
+  }
 
   return (
     <div className='absolute mx-12 my-80'>
@@ -71,11 +82,11 @@ function ROD() {
         <div className="bg-red-500 text-white px-2 py-1 inline-block rounded-md text-sm mb-2">
           RECIPE OF THE DAY
         </div>
-        <h2 className="text-xl font-bold mb-2">{recipes[randomIndex]}</h2>
+        <h2 className="text-xl font-bold mb-2">{recipes[randomIndex] || 'No Recipe Available'}</h2>
         <p className="text-gray-700 mb-4">
-          {data[randomIndex]}
+          {data[randomIndex] || 'No Description Available'}
         </p>  
-        <p className="text-gray-500">By {users[uid[randomIndex]]}</p>
+        <p className="text-gray-500">By {users[uid[randomIndex]] || 'Unknown'}</p>
       </div> 
     </div>
   );
