@@ -20,24 +20,25 @@ const Register = () => {
                 password,
                 email,
             });
+            console.log('Response:', response);
             setSuccess('Registration successful!');
             navigate('/login');
         } catch (err) {
             if (err.response) {
-                // Log the full error response
                 console.error('Error response:', err.response);
-                // Check for specific error details returned by the server
+                console.log('Error response headers:', err.response.headers);
+                console.log('Error response data:', err.response.data);
                 if (err.response.data) {
-                    setError(err.response.data.detail || 'Registration failed');
+                    setError(err.response.data.detail || 'Registration failed 1');
                 } else {
-                    setError('Registration failed');
+                    setError('Registration failed 2');
                 }
             } else {
-                // Log any other errors (network issues, etc.)
                 console.error('Error:', err.message);
-                setError('Registration failed');
+                setError('Registration failed 3');
             }
         }
+        
     };
     
 
