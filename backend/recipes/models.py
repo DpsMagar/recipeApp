@@ -12,6 +12,7 @@ class Dish(models.Model):
     instructions = models.TextField()
     estimatedTime= models.TextField()
     image= models.ImageField()
+    video= models.FileField(upload_to='videos/', null= True, blank= True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

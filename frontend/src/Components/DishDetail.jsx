@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from './AxiosInstance';
-import { useParams, Link } from 'react-router-dom';
-import { IDandTitleStore } from '../Zustand Store/Zstore';
+import { useParams } from 'react-router-dom';
 
 const DishDetail = () => {
   const { title } = useParams(); // Get the dish title from URL parameters
   const [dish, setDish] = useState(null);
   const [error, setError] = useState(null);
-  const name= localStorage.getItem('userName')
+  const name = localStorage.getItem('userName');
   const User = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-  sessionStorage.setItem('isMainPage','false')
-
-
-
+  sessionStorage.setItem('isMainPage', 'false');
 
   useEffect(() => {
     const fetchDish = async () => {
@@ -37,6 +33,23 @@ const DishDetail = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      {/* Video Section */}
+      {dish.video && (
+        <div className="mt-8 mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Video Tutorial</h2>
+          <div className="aspect-w-16 aspect-h-9">
+            <video
+              className="w-full h-full rounded-lg"
+              src={dish.video}
+              controls
+              title={`${dish.title} video`}
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      )}
+      
       {/* Dish Details Section */}
       <div className="flex flex-col lg:flex-row items-start">
         {/* Dish Image */}
@@ -53,21 +66,17 @@ const DishDetail = () => {
         {/* Dish Info */}
         <div className="lg:w-2/3 w-full lg:ml-8">
           <h1 className="text-3xl font-bold mb-4">{dish.title}</h1>
-
           <p className="text-lg text-gray-700 mb-4">{dish.description}</p>
-
           <div className="text-gray-600 mb-4">
             <span className="font-semibold">Estimated Time: </span>
             {dish.estimatedTime} minutes
           </div>
-
           {dish.category && (
             <div className="text-sm mb-4">
               <span className="font-semibold text-gray-600">Category: </span>
               {dish.category.name}
             </div>
           )}
-
           <div className="text-sm text-gray-600 mb-4">
             <div>Posted by: {User}</div>
             <div>Created at: {new Date(dish.created_at).toLocaleDateString()}</div>
@@ -95,10 +104,10 @@ const DishDetail = () => {
         <div className="bg-gray-100 p-6 rounded-lg shadow">
           <h2 className="text-2xl font-semibold mb-4">Steps</h2>
           <ol className="list-decimal list-inside space-y-2">
-            {dish.steps.map((step,index) => (
-              <li key={step.id} className="text-gray-700 list-none">
-                <span className="font-semibold">Step {index+1}: </span>
-                {step.instruction}
+            {steps.map((step, index) => (
+              <li key={index} className="text-gray-700">
+                <span className="font-semibold">Step {index + 1}: </span>
+                {step}
               </li>
             ))}
           </ol>

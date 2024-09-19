@@ -12,7 +12,7 @@ class DishSerializer(serializers.ModelSerializer):
     isBookmarked = serializers.SerializerMethodField()
     class Meta:
         model = Dish
-        fields = [ 'title', 'description','estimatedTime', 'instructions','image', 'user', 'category', 'created_at', 'updated_at', 'isBookmarked']
+        fields = [ 'title', 'description','estimatedTime', 'instructions','image','video', 'user', 'category', 'created_at', 'updated_at', 'isBookmarked']
         
     def get_isBookmarked(self, obj):
         request = self.context.get('request')
@@ -67,7 +67,7 @@ class DishDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Dish
-        fields = ['title', 'description', 'instructions', 'estimatedTime', 'image', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients', 'steps','bookmarked_by',]
+        fields = ['title', 'description', 'instructions', 'estimatedTime', 'image','video', 'user', 'category', 'created_at', 'updated_at', 'public', 'ingredients', 'steps','bookmarked_by',]
     
 
 class recipeOfTheDaySerializer(serializers.ModelSerializer):
